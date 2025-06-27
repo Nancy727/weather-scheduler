@@ -1,7 +1,6 @@
 
 # Creative Agency Website
 
-![Website Preview](https://i.imgur.com/JK9yX8H.jpg)
 
 A sleek, modern website for a creative design agency featuring smooth animations, interactive elements, and a bold black & yellow aesthetic.
 
@@ -63,10 +62,6 @@ The website is fully responsive and works on:
 - Tablet (768px)
 - Mobile (480px and below)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Credits
 
 - Video background by Pexels
@@ -75,8 +70,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Live Demo**: [View Website](https://your-domain.com)  
-**Contact**: your.email@example.com
+**Live Demo**: [View Website]([https://your-domain.com](https://creative-agency-landing.vercel.app/))  
 ```
 
 ### Key Sections Included:
