@@ -36,18 +36,17 @@ function initMovingText() {
   movingContainers.forEach(container => {
     const movingIn = container.querySelector('.moving-in');
     if (movingIn) {
-      // Clone the content 3 times for seamless looping
+   
       const content = movingIn.innerHTML;
       movingIn.innerHTML = content + content + content;
       
-      // Calculate width based on content
+   
       const h5Elements = movingIn.querySelectorAll('h5');
       let totalWidth = 0;
       h5Elements.forEach(el => {
-        totalWidth += el.offsetWidth + 30; // 30px for padding
+        totalWidth += el.offsetWidth + 30; 
       });
-      
-      // Adjust animation duration based on content width
+     
       movingIn.style.animationDuration = `${totalWidth / 100}s`;
     }
   });
@@ -57,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
   Loading();
   initMovingText();
   
-  // Initialize Locomotive Scroll
+
   const scroll = new LocomotiveScroll({
     el: document.querySelector('#main'),
     smooth: true,
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Navbar scroll effect
+
   window.addEventListener('scroll', function() {
     const nav = document.getElementById('nav');
     if (window.scrollY > 50) {
@@ -81,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Image hover effect for page2
+
   const elems = document.querySelectorAll(".elem");
   const page2 = document.querySelector("#page2");
   
@@ -95,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Menu toggle for mobile
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
 
@@ -103,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
   });
 
-  // Close menu when clicking on a link
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       if (window.innerWidth <= 768) {
@@ -112,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // GSAP animations for page3 images
   gsap.utils.toArray(".image-container").forEach((container, i) => {
     gsap.from(container, {
       scrollTrigger: {
@@ -128,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Footer animation
   gsap.from("#footer", {
     scrollTrigger: {
       trigger: "#footer",
