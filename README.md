@@ -70,7 +70,7 @@ The website is fully responsive and works on:
 
 ---
 
-**Live Demo**: [View Website]([https://your-domain.com](https://creative-agency-landing.vercel.app/))  
+**Live Demo**: https://creative-agency-landing.vercel.app/  
 ```
 
 ### Key Sections Included:
