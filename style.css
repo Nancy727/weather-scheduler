@@ -164,7 +164,7 @@ html, body {
   width: 100%;
   white-space: nowrap;
   position: absolute;
-  top: 40%;
+  top: 50%;
   transform: translateY(-45%) scaleY(0);
   padding: 8px 0;
   transition: all ease 0.3s;
