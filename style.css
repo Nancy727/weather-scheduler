@@ -562,25 +562,27 @@ html, body {
   background: #f8f9fa;
   display: flex;
   flex-direction: column;
-  height: 60vh;
+  height: 70vh;
   width: 100%;
+  position: relative;
 }
 
 .map-header {
   padding: 2rem;
-  background: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-bottom: 1px solid #e9ecef;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  color: white;
 }
 
 .map-header h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 400;
-  color: #333;
+  color: white;
   margin: 0;
 }
 
@@ -599,49 +601,60 @@ html, body {
 .location-search input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 2px solid #e1e5e9;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.location-search input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .location-search input:focus {
-  border-color: #667eea;
+  border-color: white;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .location-search button {
   padding: 0.75rem 1rem;
-  background: #667eea;
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .location-search button:hover {
-  background: #5a6fd8;
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
 }
 
 .btn-location {
   padding: 0.75rem;
-  background: #28a745;
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .btn-location:hover {
-  background: #218838;
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
 }
 
 #worldMap {
   flex: 1;
   width: 100%;
-  min-height: 400px;
+  min-height: 500px;
+  border-radius: 0 0 15px 15px;
+  overflow: hidden;
 }
 
 .map-legend {
@@ -1442,7 +1455,60 @@ html, body {
   }
 
   .recommendations-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .map-section-full {
+    height: 60vh;
+  }
+  
+  .map-header {
+    padding: 1.5rem;
+  }
+  
+  .map-header h2 {
+    font-size: 1.6rem;
+  }
+  
+  .recommendations-section {
+    padding: 2rem;
+  }
+  
+  .recommendations-section h3 {
+    font-size: 1.6rem;
+  }
+  
+  .recommendation-header {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .recommendations-grid {
+    padding: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .recommendation-card {
+    min-height: 260px;
+  }
+  
+  .card-header {
+    padding: 1.2rem 1.2rem 0.8rem;
+  }
+  
+  .card-content {
+    padding: 0 1.2rem 0.8rem;
+  }
+  
+  .card-footer {
+    padding: 0.8rem 1.2rem 1.2rem;
+  }
+  
+  .recommendation-footer {
+    padding: 0.8rem 1.5rem;
   }
 
   .alerts-grid {
@@ -1460,51 +1526,130 @@ html, body {
   }
   
   .weather-icon i {
-  font-size: 4rem;
+    font-size: 4rem;
+  }
 }
 
-/* Recommendations Section */
+/* RECOMMENDATIONS SECTION - COMPLETE FIXED VERSION */
 .recommendations-section {
-  margin: 2rem 0;
+  margin: 3rem 0;
+  width: 100%;
 }
 
-.recommendations-section h3 {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-bottom: 1.5rem;
-  color: #333;
+.recommendation-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+}
+
+.recommendation-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4, #45b7d1);
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.recommendation-header {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.recommendation-weather,
+.recommendation-time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.recommendation-weather i,
+.recommendation-time i {
+  font-size: 1rem;
+  opacity: 0.8;
 }
 
 .recommendations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  background: white;
+  width: 100%;
 }
 
 .recommendation-card {
-  background: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 15px;
-  padding: 1.5rem;
+  padding: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e9ecef;
   transition: all 0.3s ease;
-  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.recommendation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.recommendation-card:hover::before {
+  transform: scaleX(1);
 }
 
 .recommendation-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
 }
 
 .recommendation-icon {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
 }
 
 .recommendation-icon i {
@@ -1512,17 +1657,185 @@ html, body {
   color: white;
 }
 
-.recommendation-card h4 {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #333;
+.priority-indicator {
+  position: relative;
 }
 
-.recommendation-card p {
+.priority-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  animation: pulse 2s infinite;
+}
+
+.priority-dot.critical {
+  background: #e74c3c;
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.priority-dot.high {
+  background: #f39c12;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+}
+
+.priority-dot.medium {
+  background: #3498db;
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.card-content {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.card-content h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.card-content p {
   font-size: 0.9rem;
-  color: #666;
-  line-height: 1.4;
+  opacity: 0.9;
+  line-height: 1.5;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.priority-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.action-button {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.recommendation-footer {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.recommendation-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 1024px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 1.5rem;
+  }
+  
+  .recommendation-card {
+    min-height: 180px;
+    padding: 15px;
+  }
+  
+  .card-content h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .recommendation-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .recommendation-card {
+    min-height: 160px;
+  }
+}
+
+/* Alerts Section */
+
+.priority-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.priority-badge.critical {
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.9), rgba(192, 57, 43, 0.9));
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.priority-badge.high {
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.9), rgba(230, 126, 34, 0.9));
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+}
+
+.priority-badge.medium {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9));
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.recommendation-card:hover .priority-badge {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Alerts Section */
@@ -1647,9 +1960,19 @@ html, body {
 .btn-delete:hover {
   background: #c82333;
 }
-}
 
 @media (max-width: 768px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+  }
+  
+  .recommendation-card {
+    min-height: 180px !important;
+    padding: 15px !important;
+  }
+  
   .nav-links {
     display: none;
     position: absolute;
@@ -1734,18 +2057,109 @@ html, body {
     padding: 10px 20px;
   }
   
-  .weather-card {
+    .weather-card {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
+
   .weather-details {
     justify-content: center;
   }
-  
+
   .forecast-grid {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  
+  .map-section-full {
+    height: 50vh;
+  }
+  
+  .map-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .map-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .location-search {
+    max-width: 100%;
+  }
+  
+  .recommendations-section {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .recommendation-box {
+    border-radius: 20px;
+  }
+  
+  .recommendation-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .recommendation-card {
+    min-height: 240px;
+  }
+  
+  .card-header {
+    padding: 1rem 1rem 0.5rem;
+  }
+  
+  .card-content {
+    padding: 0 1rem 0.5rem;
+  }
+  
+  .card-content h4 {
+    font-size: 1.2rem;
+  }
+  
+  .card-content p {
+    font-size: 0.9rem;
+  }
+  
+  .card-footer {
+    padding: 0.5rem 1rem 1rem;
+  }
+  
+  .recommendation-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .recommendation-icon i {
+    font-size: 1.5rem;
+  }
+  
+  .action-button {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .action-button i {
+    font-size: 0.9rem;
+  }
+  
+  .recommendation-footer {
+    padding: 0.8rem 1rem;
+  }
+  
+  .recommendation-note {
+    font-size: 0.8rem;
   }
   
   .form-row {
@@ -1895,5 +2309,40 @@ html, body {
   
   .forecast-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .map-section-full {
+    height: 40vh;
+  }
+  
+  .map-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .recommendations-section {
+    padding: 1rem;
+  }
+  
+  .recommendations-section h3 {
+    font-size: 1.4rem;
+  }
+  
+  .recommendations-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+  }
+  
+  .recommendation-card {
+    padding: 1rem !important;
+    min-height: 160px !important;
+  }
+  
+  .recommendation-card h4 {
+    font-size: 1.1rem;
+  }
+  
+  .recommendation-card p {
+    font-size: 0.9rem;
   }
 }

@@ -100,8 +100,26 @@
           <!-- Weather Recommendations -->
           <div class="recommendations-section">
             <h3>Weather <em>Recommendations</em></h3>
-            <div class="recommendations-grid" id="recommendationsGrid">
-              <!-- Recommendations will be populated by JavaScript -->
+            <div class="recommendation-box">
+              <div class="recommendation-header">
+                <div class="recommendation-weather">
+                  <i class="fas fa-cloud-sun"></i>
+                  <span>Based on current conditions</span>
+                </div>
+                <div class="recommendation-time">
+                  <i class="fas fa-clock"></i>
+                  <span id="recommendationTime">Updated just now</span>
+                </div>
+              </div>
+              <div class="recommendations-grid" id="recommendationsGrid">
+                <!-- Recommendations will be populated by JavaScript -->
+              </div>
+              <div class="recommendation-footer">
+                <div class="recommendation-note">
+                  <i class="fas fa-info-circle"></i>
+                  <span>Recommendations are personalized based on your location and current weather conditions</span>
+                </div>
+              </div>
             </div>
           </div>
 

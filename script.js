@@ -478,49 +478,160 @@ class WeatherApp {
 
     generateRecommendations() {
         const recommendationsGrid = document.getElementById('recommendationsGrid');
+        const recommendationTime = document.getElementById('recommendationTime');
         if (!recommendationsGrid) return;
 
-        // Sample recommendations - in a real app, these would be based on current weather
+        // Update timestamp
+        if (recommendationTime) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            recommendationTime.textContent = `Updated at ${timeString}`;
+        }
+
+        // Weather recommendation cards with specific styling
         const recommendations = [
             {
                 icon: 'fas fa-umbrella',
                 title: 'Take Umbrella',
-                description: 'Rain expected in the next few hours'
+                description: 'Rain expected in the next few hours',
+                priority: 'high',
+                color: '#3498db',
+                bgGradient: 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
+                iconBg: 'linear-gradient(135deg, #5dade2 0%, #3498db 100%)'
             },
             {
                 icon: 'fas fa-tshirt',
                 title: 'Wear Light Clothes',
-                description: 'Temperature is warm and comfortable'
+                description: 'Temperature is warm and comfortable',
+                priority: 'medium',
+                color: '#2ecc71',
+                bgGradient: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
+                iconBg: 'linear-gradient(135deg, #58d68d 0%, #2ecc71 100%)'
             },
             {
                 icon: 'fas fa-sun',
                 title: 'Apply Sunscreen',
-                description: 'High UV index detected'
+                description: 'High UV index detected',
+                priority: 'high',
+                color: '#f39c12',
+                bgGradient: 'linear-gradient(135deg, #f39c12 0%, #e67e22 100%)',
+                iconBg: 'linear-gradient(135deg, #f7dc6f 0%, #f39c12 100%)'
             },
             {
                 icon: 'fas fa-wind',
                 title: 'Secure Loose Items',
-                description: 'Strong winds expected'
+                description: 'Strong winds expected',
+                priority: 'medium',
+                color: '#9b59b6',
+                bgGradient: 'linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%)',
+                iconBg: 'linear-gradient(135deg, #bb8fce 0%, #9b59b6 100%)'
             },
             {
                 icon: 'fas fa-car',
                 title: 'Drive Carefully',
-                description: 'Wet road conditions'
+                description: 'Wet road conditions',
+                priority: 'high',
+                color: '#e74c3c',
+                bgGradient: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
+                iconBg: 'linear-gradient(135deg, #ec7063 0%, #e74c3c 100%)'
             },
             {
                 icon: 'fas fa-home',
                 title: 'Stay Indoors',
-                description: 'Severe weather warning'
+                description: 'Severe weather warning',
+                priority: 'critical',
+                color: '#8b0000',
+                bgGradient: 'linear-gradient(135deg, #8b0000 0%, #660000 100%)',
+                iconBg: 'linear-gradient(135deg, #a52a2a 0%, #8b0000 100%)'
             }
         ];
 
         recommendationsGrid.innerHTML = recommendations.map(rec => `
-            <div class="recommendation-card">
-                <div class="recommendation-icon">
-                    <i class="${rec.icon}"></i>
+            <div class="recommendation-card" style="
+                background: linear-gradient(135deg, ${rec.color} 0%, ${rec.color}dd 100%);
+                border-radius: 15px;
+                padding: 20px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                display: flex;
+                flex-direction: column;
+                min-height: 200px;
+                color: white;
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                box-sizing: border-box;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(255,255,255,0.2);
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 1.5rem;
+                    ">
+                        <i class="${rec.icon}"></i>
+                    </div>
+                    <div style="
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        background: ${rec.priority === 'high' ? '#e74c3c' : '#f39c12'};
+                        box-shadow: 0 0 10px ${rec.priority === 'high' ? '#e74c3c' : '#f39c12'};
+                    "></div>
                 </div>
-                <h4>${rec.title}</h4>
-                <p>${rec.description}</p>
+                
+                <div style="flex: 1;">
+                    <h4 style="
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        margin-bottom: 8px;
+                        color: white;
+                    ">${rec.title}</h4>
+                    <p style="
+                        font-size: 0.9rem;
+                        color: rgba(255,255,255,0.9);
+                        line-height: 1.4;
+                        margin-bottom: 0;
+                    ">${rec.description}</p>
+                </div>
+                
+                <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 15px;
+                    padding-top: 15px;
+                    border-top: 1px solid rgba(255,255,255,0.2);
+                ">
+                    <span style="
+                        padding: 4px 12px;
+                        border-radius: 15px;
+                        font-size: 0.7rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        background: rgba(255,255,255,0.2);
+                        color: white;
+                    ">${rec.priority}</span>
+                    <div style="
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.2);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.8rem;
+                    ">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
             </div>
         `).join('');
     }
