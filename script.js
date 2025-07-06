@@ -147,15 +147,15 @@ class AlertScheduler {
     }
 
     renderAlerts() {
-        const alertsList = document.getElementById('activeAlertsList');
-        if (!alertsList) return;
+        const alertsGrid = document.getElementById('alertsGrid');
+        if (!alertsGrid) return;
 
-        alertsList.innerHTML = this.alerts.length === 0 
-            ? '<p style="text-align: center; color: #666;">No active alerts</p>'
+        alertsGrid.innerHTML = this.alerts.length === 0 
+            ? '<p style="text-align: center; color: #666; grid-column: 1 / -1;">No active alerts</p>'
             : this.alerts.map(alert => `
-                <div class="alert-card">
-                    <div class="alert-card-header">
-                        <span class="alert-name">${alert.name}</span>
+                <div class="alert-card ${this.getAlertSeverity(alert)}">
+                    <div class="alert-header">
+                        <span class="alert-title">${alert.name}</span>
                         <span class="alert-status ${alert.status}">${alert.status}</span>
                     </div>
                     <div class="alert-details">
@@ -170,6 +170,14 @@ class AlertScheduler {
                 </div>
             `).join('');
     }
+
+    getAlertSeverity(alert) {
+        // Determine alert severity based on type and value
+        if (alert.type === 'temperature' && Math.abs(alert.value) > 30) return 'warning';
+        if (alert.type === 'wind' && alert.value > 50) return 'warning';
+        if (alert.type === 'rain' && alert.value > 20) return 'warning';
+        return 'info';
+    }
 }
 
 // Weather App class
@@ -177,19 +185,93 @@ class WeatherApp {
     constructor() {
         this.weatherAPI = new WeatherAPI();
         this.currentCity = config.DEFAULT_CITY;
+        this.map = null;
+        this.markers = [];
         this.init();
     }
 
     init() {
         this.setupEventListeners();
+        this.initMap();
         this.loadCurrentWeather();
         this.requestNotificationPermission();
+        this.generateRecommendations();
+        this.renderAlerts();
+    }
+
+    initMap() {
+        // Initialize the map
+        this.map = L.map('worldMap').setView([20, 0], 2);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(this.map);
+
+        // Add click event to map
+        this.map.on('click', (e) => {
+            this.getWeatherByCoordinates(e.latlng.lat, e.latlng.lng);
+        });
+    }
+
+    async getWeatherByCoordinates(lat, lng) {
+        try {
+            const response = await fetch(
+                `${this.weatherAPI.baseUrl}/weather?lat=${lat}&lon=${lng}&appid=${this.weatherAPI.apiKey}&units=metric`
+            );
+            if (!response.ok) throw new Error('Location not found');
+            const weather = await response.json();
+            this.updateCurrentWeather(weather);
+            this.addMapMarker(lat, lng, weather);
+        } catch (error) {
+            console.error('Error fetching weather by coordinates:', error);
+        }
+    }
+
+    addMapMarker(lat, lng, weather) {
+        // Clear existing markers
+        this.markers.forEach(marker => this.map.removeLayer(marker));
+        this.markers = [];
+
+        // Create custom icon based on weather
+        const iconColor = this.getWeatherIconColor(weather.weather[0].main);
+        const customIcon = L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="background: ${iconColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+
+        const marker = L.marker([lat, lng], { icon: customIcon }).addTo(this.map);
+        marker.bindPopup(`
+            <div style="text-align: center;">
+                <h4>${weather.name}</h4>
+                <p>${Math.round(weather.main.temp)}°C</p>
+                <p>${weather.weather[0].description}</p>
+            </div>
+        `);
+        this.markers.push(marker);
+    }
+
+    getWeatherIconColor(weatherMain) {
+        const colors = {
+            'Clear': '#ffd700',
+            'Clouds': '#87ceeb',
+            'Rain': '#4682b4',
+            'Drizzle': '#4682b4',
+            'Thunderstorm': '#483d8b',
+            'Snow': '#ffffff',
+            'Mist': '#d3d3d3',
+            'Fog': '#d3d3d3'
+        };
+        return colors[weatherMain] || '#87ceeb';
     }
 
     setupEventListeners() {
         // Search functionality
         const searchBtn = document.getElementById('searchBtn');
         const locationInput = document.getElementById('locationInput');
+        const currentLocationBtn = document.getElementById('currentLocationBtn');
 
         if (searchBtn && locationInput) {
             searchBtn.addEventListener('click', () => this.searchLocation());
@@ -198,7 +280,32 @@ class WeatherApp {
             });
         }
 
-        // Alert form
+        if (currentLocationBtn) {
+            currentLocationBtn.addEventListener('click', () => this.getCurrentLocation());
+        }
+    }
+
+    getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    this.getWeatherByCoordinates(latitude, longitude);
+                    this.map.setView([latitude, longitude], 10);
+                },
+                (error) => {
+                    console.error('Error getting location:', error);
+                    this.showError('Unable to get your location');
+                }
+            );
+        } else {
+            this.showError('Geolocation is not supported by this browser');
+        }
+    }
+
+    // Alert form
+    setupAlertForm() {
         const alertForm = document.getElementById('alertForm');
         if (alertForm) {
             alertForm.addEventListener('submit', (e) => {
@@ -369,6 +476,55 @@ class WeatherApp {
         alert(message);
     }
 
+    generateRecommendations() {
+        const recommendationsGrid = document.getElementById('recommendationsGrid');
+        if (!recommendationsGrid) return;
+
+        // Sample recommendations - in a real app, these would be based on current weather
+        const recommendations = [
+            {
+                icon: 'fas fa-umbrella',
+                title: 'Take Umbrella',
+                description: 'Rain expected in the next few hours'
+            },
+            {
+                icon: 'fas fa-tshirt',
+                title: 'Wear Light Clothes',
+                description: 'Temperature is warm and comfortable'
+            },
+            {
+                icon: 'fas fa-sun',
+                title: 'Apply Sunscreen',
+                description: 'High UV index detected'
+            },
+            {
+                icon: 'fas fa-wind',
+                title: 'Secure Loose Items',
+                description: 'Strong winds expected'
+            },
+            {
+                icon: 'fas fa-car',
+                title: 'Drive Carefully',
+                description: 'Wet road conditions'
+            },
+            {
+                icon: 'fas fa-home',
+                title: 'Stay Indoors',
+                description: 'Severe weather warning'
+            }
+        ];
+
+        recommendationsGrid.innerHTML = recommendations.map(rec => `
+            <div class="recommendation-card">
+                <div class="recommendation-icon">
+                    <i class="${rec.icon}"></i>
+                </div>
+                <h4>${rec.title}</h4>
+                <p>${rec.description}</p>
+            </div>
+        `).join('');
+    }
+
     showSuccess(message) {
         // Simple success display - you could enhance this with a toast notification
         alert(message);
@@ -405,6 +561,41 @@ function Loading() {
 
     tl.to("#loader", {
         opacity: 0
+    });
+}
+
+// Initialize feature cards animations
+function initFeatureCards() {
+    // Add GSAP animations for feature cards
+    gsap.utils.toArray(".feature-card").forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none none",
+                scroller: "#main"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            delay: i * 0.1
+        });
+    });
+
+    // Add stagger animation for feature tags
+    gsap.utils.toArray(".feature-tags span").forEach((tag, i) => {
+        gsap.from(tag, {
+            scrollTrigger: {
+                trigger: tag,
+                start: "top 90%",
+                toggleActions: "play none none none",
+                scroller: "#main"
+            },
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.5,
+            delay: i * 0.05
+        });
     });
 }
 
@@ -499,16 +690,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-  // Initialize moving text for works section
-  initMovingText();
+  // Initialize feature cards animations
+  initFeatureCards();
 
-  // Handle video backgrounds for works section
-  const elems = document.querySelectorAll(".elem");
+  // Handle video backgrounds for feature cards
+  const featureCards = document.querySelectorAll(".feature-card");
   const works = document.querySelector("#works");
   
-  elems.forEach(function(elem) {
-    elem.addEventListener("mouseenter", function() {
-      const videoSrc = elem.getAttribute("data-video");
+  featureCards.forEach(function(card) {
+    card.addEventListener("mouseenter", function() {
+      const videoSrc = card.getAttribute("data-video");
       if (videoSrc) {
         // Create video element if it doesn't exist
         let video = works.querySelector('video');
@@ -525,11 +716,24 @@ document.addEventListener('DOMContentLoaded', function() {
           video.style.height = '100%';
           video.style.objectFit = 'cover';
           video.style.zIndex = '1';
+          video.style.opacity = '0.3';
           works.appendChild(video);
         }
         video.src = videoSrc;
         video.play();
         works.style.transition = 'background-image 0.5s ease';
+      }
+    });
+
+    card.addEventListener("mouseleave", function() {
+      const video = works.querySelector('video');
+      if (video) {
+        video.style.opacity = '0';
+        setTimeout(() => {
+          if (video.parentNode) {
+            video.parentNode.removeChild(video);
+          }
+        }, 500);
       }
     });
   });
@@ -547,6 +751,38 @@ document.addEventListener('DOMContentLoaded', function() {
             y: 50,
             duration: 0.8,
             delay: i * 0.1
+        });
+    });
+
+    // GSAP animations for gallery items
+    gsap.utils.toArray(".gallery-item").forEach((item, i) => {
+        gsap.from(item, {
+            scrollTrigger: {
+                trigger: item,
+                start: "top 85%",
+                toggleActions: "play none none none",
+                scroller: "#main"
+            },
+            opacity: 0,
+            y: 60,
+            duration: 0.8,
+            delay: i * 0.15
+        });
+    });
+
+    // Stagger animation for gallery tags
+    gsap.utils.toArray(".gallery-tags span").forEach((tag, i) => {
+        gsap.from(tag, {
+            scrollTrigger: {
+                trigger: tag,
+                start: "top 90%",
+                toggleActions: "play none none none",
+                scroller: "#main"
+            },
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.5,
+            delay: i * 0.05
         });
     });
 });

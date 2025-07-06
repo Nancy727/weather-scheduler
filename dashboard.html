@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Weather Alert Scheduler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -26,18 +27,47 @@
       </div>
     </div>
 
-    <div class="page-container">
-      <div class="dashboard-container">
-        <div class="weather-header">
-          <h1>Weather Dashboard</h1>
-          <div class="location-search">
-            <input type="text" id="locationInput" placeholder="Enter city name...">
-            <button id="searchBtn"><i class="fas fa-search"></i></button>
+    <div class="dashboard-layout-full">
+      <!-- Full Width Map Section -->
+      <div class="map-section-full">
+        <div class="map-header">
+          <h2>World Weather <em>Map</em></h2>
+          <div class="map-controls">
+            <div class="location-search">
+              <input type="text" id="locationInput" placeholder="Search location...">
+              <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <button id="currentLocationBtn" class="btn-location">
+              <i class="fas fa-crosshairs"></i>
+            </button>
           </div>
         </div>
-        
-        <div class="current-weather">
-          <div class="weather-card">
+        <div id="worldMap"></div>
+        <div class="map-legend">
+          <div class="legend-item">
+            <span class="legend-color sunny"></span>
+            <span>Sunny</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color cloudy"></span>
+            <span>Cloudy</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color rainy"></span>
+            <span>Rainy</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color stormy"></span>
+            <span>Stormy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Section Below Map -->
+      <div class="dashboard-content">
+        <div class="content-container">
+          <!-- Current Weather Card -->
+          <div class="weather-card-main">
             <div class="weather-info">
               <h2 id="currentCity">Loading...</h2>
               <div class="temperature">
@@ -63,24 +93,35 @@
               <i id="weatherIcon" class="fas fa-cloud"></i>
             </div>
           </div>
-        </div>
 
-        <div class="forecast-section">
-          <h3>5-Day Forecast</h3>
-          <div class="forecast-grid" id="forecastGrid">
-            <!-- Forecast cards will be populated by JavaScript -->
+          <!-- Weather Recommendations -->
+          <div class="recommendations-section">
+            <h3>Weather <em>Recommendations</em></h3>
+            <div class="recommendations-grid" id="recommendationsGrid">
+              <!-- Recommendations will be populated by JavaScript -->
+            </div>
           </div>
-        </div>
 
-        <div class="alerts-section">
-          <h3>Active Alerts</h3>
-          <div class="alerts-container" id="alertsContainer">
-            <!-- Alerts will be populated by JavaScript -->
+          <!-- Active Alerts -->
+          <div class="alerts-section">
+            <h3>Active <em>Alerts</em></h3>
+            <div class="alerts-grid" id="alertsGrid">
+              <!-- Alert cards will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- 5-Day Forecast -->
+          <div class="forecast-section">
+            <h3>5-Day <em>Forecast</em></h3>
+            <div class="forecast-grid" id="forecastGrid">
+              <!-- Forecast cards will be populated by JavaScript -->
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script type="module" src="script.js"></script>
   </body>
 </html> 
