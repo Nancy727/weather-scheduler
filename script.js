@@ -825,9 +825,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu functionality
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinksContainer = document.querySelector('.nav-links');
+    const navCloseBtn = document.getElementById('navCloseBtn');
+    
+    console.log('Menu elements found:', { menuToggle, navLinksContainer, navCloseBtn });
+    
     if (menuToggle && navLinksContainer) {
-        menuToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             navLinksContainer.classList.toggle('active');
+            if (navCloseBtn) {
+                navCloseBtn.style.display = navLinksContainer.classList.contains('active') ? 'block' : 'none';
+            }
+            console.log('Menu toggled:', navLinksContainer.classList.contains('active'));
+        });
+        
+        // Close menu when clicking on a link
+        const navLinks = navLinksContainer.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('active');
+                if (navCloseBtn) navCloseBtn.style.display = 'none';
+            });
+        });
+        
+        // Close menu when clicking the close button
+        if (navCloseBtn) {
+            navCloseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navLinksContainer.classList.remove('active');
+                navCloseBtn.style.display = 'none';
+                console.log('Menu closed via close button');
+            });
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinksContainer.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinksContainer.classList.remove('active');
+                if (navCloseBtn) navCloseBtn.style.display = 'none';
+            }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                navLinksContainer.classList.remove('active');
+                if (navCloseBtn) navCloseBtn.style.display = 'none';
+            }
         });
     }
 
@@ -910,6 +956,8 @@ document.addEventListener('DOMContentLoaded', function() {
             delay: i * 0.15
         });
     });
+
+
 
     // Stagger animation for gallery tags
     gsap.utils.toArray(".gallery-tags span").forEach((tag, i) => {

@@ -9,6 +9,7 @@
     <title>Weather Alert Scheduler</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="common.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -33,6 +34,9 @@
           <span>WeatherScheduler</span>
         </div>
         <div class="nav-links">
+          <button class="nav-close" id="navCloseBtn" aria-label="Close menu" style="display:none;position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;color:#333;z-index:1002;cursor:pointer;">
+            &times;
+          </button>
           <a href="index.html" class="active">Home</a>
           <a href="dashboard.html">Dashboard</a>
           <a href="scheduler.html">Scheduler</a>
@@ -274,7 +278,7 @@
 
           <div class="gallery-item small">
             <div class="gallery-content">
-              <video autoplay loop muted playsinline>
+              <video autoplay loop Amuted playsinline>
                 <source src="https://videos.pexels.com/video-files/27583824/12174976_2560_1440_30fps.mp4" type="video/mp4">
               </video>
               <div class="gallery-overlay">
