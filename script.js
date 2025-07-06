@@ -601,7 +601,25 @@ function initFeatureCards() {
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    Loading();
+    // Small delay to ensure proper page refresh
+    setTimeout(() => {
+        Loading();
+    }, 100);
+
+    // Ensure proper page refresh functionality
+    window.addEventListener('beforeunload', function() {
+        // Clean up any scroll instances
+        if (window.scroll) {
+            window.scroll.destroy();
+        }
+    });
+
+    // Handle browser refresh button
+    window.addEventListener('unload', function() {
+        if (window.scroll) {
+            window.scroll.destroy();
+        }
+    });
 
     // Check if we're on the home page (has locomotive scroll)
     const mainContainer = document.querySelector('#main');
@@ -621,6 +639,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 smooth: true
             }
         });
+
+        // Store scroll instance globally for cleanup
+        window.scroll = scroll;
 
         // Navigation scroll effect and section highlighting for home page
         const updateActiveSection = () => {
@@ -662,6 +683,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initial call to set correct active state
         updateActiveSection();
+
+        // Handle page refresh properly
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                if (scroll) {
+                    scroll.destroy();
+                }
+            }
+        });
     } else {
         // For separate pages, just handle navigation background
         window.addEventListener('scroll', function() {
