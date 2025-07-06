@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scheduler - Weather Alert Scheduler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="nav">
+      <div class="nav-container">
+        <div class="logo">
+          <i class="fas fa-cloud-sun"></i>
+          <span>WeatherScheduler</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="scheduler.html" class="active">Scheduler</a>
+          <a href="about.html">About</a>
+        </div>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-container">
+      <div class="scheduler-container">
+        <div class="scheduler-header">
+          <h1>Weather Alert Scheduler</h1>
+          <p>Set up custom weather alerts for your location</p>
+        </div>
+
+        <div class="scheduler-content">
+          <div class="alert-form">
+            <h3>Create New Alert</h3>
+            <form id="alertForm">
+              <div class="form-group">
+                <label for="alertName">Alert Name</label>
+                <input type="text" id="alertName" required placeholder="e.g., Rain Alert">
+              </div>
+              
+              <div class="form-group">
+                <label for="alertLocation">Location</label>
+                <input type="text" id="alertLocation" required placeholder="City name">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="alertType">Alert Type</label>
+                  <select id="alertType" required>
+                    <option value="">Select type</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="rain">Rain</option>
+                    <option value="snow">Snow</option>
+                    <option value="wind">Wind</option>
+                    <option value="humidity">Humidity</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="alertCondition">Condition</label>
+                  <select id="alertCondition" required>
+                    <option value="">Select condition</option>
+                    <option value="above">Above</option>
+                    <option value="below">Below</option>
+                    <option value="equals">Equals</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="alertValue">Threshold Value</label>
+                <input type="number" id="alertValue" required placeholder="Enter value">
+              </div>
+
+              <div class="form-group">
+                <label for="alertTime">Check Time</label>
+                <input type="time" id="alertTime" required>
+              </div>
+
+              <div class="form-group">
+                <label for="alertFrequency">Frequency</label>
+                <select id="alertFrequency" required>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-primary">Create Alert</button>
+            </form>
+          </div>
+
+          <div class="active-alerts">
+            <h3>Active Alerts</h3>
+            <div class="alerts-list" id="activeAlertsList">
+              <!-- Active alerts will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html> 
