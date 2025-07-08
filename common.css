@@ -290,6 +290,8 @@ html, body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     border-radius: 0 0 10px 10px;
+    max-height: 80vh;
+    overflow-y: auto;
   }
   
   .nav-links.active {
@@ -302,6 +304,10 @@ html, body {
     text-decoration: none;
     color: #333;
     transition: background-color 0.3s ease;
+    font-size: 1rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
   
   .nav-links a:hover {
@@ -321,14 +327,83 @@ html, body {
     border: none;
     color: #333;
     font-size: 1.5rem;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .menu-toggle:hover {
     color: #667eea;
   }
   
+  .nav-close {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .footer-content {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 1rem;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .logo i {
+    font-size: 1.8rem;
+  }
+  
+  .nav-links {
+    padding: 0.8rem;
+  }
+  
+  .nav-links a {
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .menu-toggle {
+    font-size: 1.3rem;
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-container {
+    padding: 0 0.8rem;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+  }
+  
+  .logo i {
+    font-size: 1.6rem;
+  }
+  
+  .nav-links {
+    padding: 0.6rem;
+  }
+  
+  .nav-links a {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .menu-toggle {
+    font-size: 1.2rem;
+    padding: 0.3rem;
   }
 }
 

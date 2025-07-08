@@ -24,6 +24,7 @@
           <a href="dashboard.html" class="active">Dashboard</a>
           <a href="scheduler.html">Scheduler</a>
           <a href="about.html">About</a>
+          <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
         </div>
         <div class="menu-toggle">
           <i class="fas fa-bars"></i>
@@ -139,11 +140,104 @@
               <!-- Forecast cards will be populated by JavaScript -->
             </div>
           </div>
+
+          <!-- Advanced Analytics Section -->
+          <div class="analytics-section">
+            <h3>Advanced <em>Analytics</em></h3>
+            <div class="analytics-chart-container">
+              <canvas id="weatherTrendsChart" height="260"></canvas>
+              <div class="analytics-stats-row" id="weatherStatsRow">
+                <!-- Stats will be populated by JS -->
+              </div>
+            </div>
+          </div>
+          <!-- Sun Card Section -->
+          <div class="dashboard-card sun-card">
+            <div class="sun-card-header">
+              <i class="fas fa-sun"></i>
+              <span>Sunrise & Sunset</span>
+            </div>
+            <div class="sun-card-content">
+              <div class="sun-times">
+                <div class="sun-time">
+                  <i class="fas fa-arrow-up"></i>
+                  <span id="sunriseTime">--:--</span>
+                  <span class="sun-label">Sunrise</span>
+                </div>
+                <div class="sun-visual">
+                  <svg id="sunArc" width="120" height="60" viewBox="0 0 120 60">
+                    <path d="M10,50 Q60,0 110,50" stroke="#FFD700" stroke-width="3" fill="none"/>
+                    <circle id="sunIcon" cx="60" cy="30" r="12" fill="url(#sunGradient)" />
+                    <defs>
+                      <radialGradient id="sunGradient" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fffbe0" />
+                        <stop offset="80%" stop-color="#FFD700" />
+                        <stop offset="100%" stop-color="#FFB300" />
+                      </radialGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="sun-time">
+                  <i class="fas fa-arrow-down"></i>
+                  <span id="sunsetTime">--:--</span>
+                  <span class="sun-label">Sunset</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Timeline Card Section -->
+          <div class="dashboard-card timeline-card">
+            <div class="timeline-card-header">
+              <i class="fas fa-sun"></i>
+              <span>Daylight Timeline</span>
+            </div>
+            <div class="timeline-card-body">
+              <section id="timeline-section"></section>
+              <div class="timeline-labels">
+                <span id="timelineTimeDisplay">6:00 AM</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <footer id="footer" data-scroll-section>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About WeatherScheduler</h3>
+          <p>We are a weather monitoring platform dedicated to keeping you informed and prepared for any weather conditions.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: info@weatherscheduler.com</p>
+          <p>Phone: +1 (555) 123-4567</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="scheduler.html">Scheduler</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Weather Alert Scheduler. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script type="module" src="script.js?v=1.0"></script>
+    <script type="module" src="dashboard.js"></script>
   </body>
 </html> 

@@ -1,232 +1,235 @@
 Scheduler Page Specific Styles
 
-/* Scheduler Page */
-.scheduler-container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* Scheduler Page - About Page Inspired Redesign */
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80px 0 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .scheduler-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .scheduler-header h1 {
-  font-size: 3rem;
-  color: #333;
+  font-size: 3.2rem;
+  font-weight: 100;
+  color: #4f46e5;
   margin-bottom: 1rem;
 }
 
 .scheduler-header p {
-  font-size: 1.2rem;
-  color: #666;
+  font-size: 1.3rem;
+  color: #6366f1;
+  margin-bottom: 0;
+  font-weight: 500;
 }
 
-.scheduler-content {
+.scheduler-container {
+  max-width: 1200px;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
 }
 
-.alert-form {
+.scheduler-card {
   background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
 }
 
-.alert-form h3 {
+.card-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 16px rgba(102,126,234,0.13);
+}
+
+.card-icon i {
+  font-size: 2rem;
+  color: white;
+}
+
+.task-form h3,
+.map-card h3,
+.heap-list-card h3 {
   font-size: 1.5rem;
   color: #333;
+  font-weight: 500;
   margin-bottom: 1.5rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
 }
 
 .form-group label {
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #333;
 }
-
 .form-group input,
-.form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #667eea;
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 1rem;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: #5a6fd8;
-}
-
-.active-alerts {
-  background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.active-alerts h3 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-}
-
-.alerts-list {
-  display: grid;
-  gap: 1rem;
-}
-
-.alert-card {
-  background: #f8f9fa;
+.form-group select,
+.form-group textarea {
+  background: #f1f5f9;
+  border: 2px solid #e0e7ff;
   border-radius: 10px;
-  padding: 1.5rem;
-  border-left: 4px solid #667eea;
+  padding: 0.9rem 1.1rem;
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+  margin-bottom: 1.1rem;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #667eea;
+  background: #e0e7ff;
+}
+.btn-primary {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: linear-gradient(90deg, #5a6fd8 0%, #764ba2 100%);
+  box-shadow: 0 4px 16px rgba(102,126,234,0.13);
 }
 
-.alert-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#map {
+  min-height: 300px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(102,126,234,0.08);
   margin-bottom: 1rem;
 }
 
-.alert-name {
-  font-weight: bold;
-  color: #333;
-}
-
-.alert-status {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.alert-status.active {
-  background: #d4edda;
-  color: #155724;
-}
-
-.alert-status.inactive {
-  background: #f8d7da;
-  color: #721c24;
-}
-
-.alert-details {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.alert-actions {
+#weatherLegend {
   margin-top: 1rem;
+}
+
+#heapList {
   display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Heap event card style (placeholder) */
+.heap-event-card {
+  background: #f8f9fa;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(102,126,234,0.06);
+  padding: 1.2rem 1.1rem 1.1rem 1.1rem;
+  border-left: 5px solid #667eea;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+}
+.heap-event-card .event-title {
+  font-weight: 600;
+  color: #4f46e5;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+.heap-event-card .event-meta {
+  font-size: 0.97rem;
+  color: #6366f1;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.heap-event-card .event-notes {
+  color: #666;
+  font-size: 0.97rem;
+  margin-top: 0.3rem;
 }
 
-.btn-small {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  transition: background 0.3s ease;
-}
-
-.btn-edit {
-  background: #ffc107;
-  color: #333;
-}
-
-.btn-edit:hover {
-  background: #e0a800;
-}
-
-.btn-delete {
-  background: #dc3545;
-  color: white;
-}
-
-.btn-delete:hover {
-  background: #c82333;
-}
-
-/* Responsive Design for Scheduler */
 @media (max-width: 1024px) {
-  .scheduler-content {
+  .scheduler-container {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .scheduler-header h1 {
-    font-size: 2rem;
-  }
-  
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .scheduler-content {
     gap: 2rem;
   }
-  
-  .alert-form,
-  .active-alerts {
-    padding: 1.5rem;
+}
+@media (max-width: 768px) {
+  .page-container {
+    padding: 40px 0 30px 0;
+  }
+  .scheduler-header h1 {
+    font-size: 2.2rem;
+  }
+  .scheduler-card {
+    padding: 1.5rem 0.7rem 1.5rem 0.7rem;
+  }
+}
+@media (max-width: 480px) {
+  .page-container {
+    padding: 10px 0 10px 0;
+  }
+  .scheduler-header h1 {
+    font-size: 1.1rem;
+  }
+  .scheduler-card {
+    padding: 0.5rem 0.1rem 0.5rem 0.1rem;
   }
 }
 
-@media (max-width: 480px) {
-  .scheduler-header h1 {
-    font-size: 1.8rem;
+.event-list-card, .legend-card {
+  background: white;
+  border-radius: 25px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.event-list-card h3, .legend-card h3 {
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+#eventList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+@media (max-width: 1024px) {
+  .event-list-card, .legend-card {
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+    margin-top: 1.2rem;
   }
-  
-  .scheduler-header p {
-    font-size: 1rem;
-  }
-  
-  .alert-form,
-  .active-alerts {
-    padding: 1rem;
-  }
-  
-  .form-group input,
-  .form-group select,
-  .btn-primary {
-    min-height: 44px;
-    font-size: 16px;
+}
+@media (max-width: 768px) {
+  .event-list-card, .legend-card {
+    padding: 1rem 0.3rem 1rem 0.3rem;
+    margin-top: 1rem;
   }
 } 

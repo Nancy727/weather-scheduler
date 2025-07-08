@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="common.css" />
     <link rel="stylesheet" href="scheduler.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://unpkg.com/leaflet-openweathermap/leaflet-openweathermap.js"></script>
+    <script src="https://unpkg.com/ngeohash@0.6.3/build/ngeohash.min.js"></script>
   </head>
   <body>
     <div id="nav">
@@ -23,6 +29,7 @@
           <a href="dashboard.html">Dashboard</a>
           <a href="scheduler.html" class="active">Scheduler</a>
           <a href="about.html">About</a>
+          <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
         </div>
         <div class="menu-toggle">
           <i class="fas fa-bars"></i>
@@ -31,83 +38,105 @@
     </div>
 
     <div class="page-container">
+      <div class="scheduler-header">
+        <h1>Weather Event Scheduler</h1>
+        <p>Plan, prioritize, and visualize your events with live weather and map integration</p>
+      </div>
       <div class="scheduler-container">
-        <div class="scheduler-header">
-          <h1>Weather Alert Scheduler</h1>
-          <p>Set up custom weather alerts for your location</p>
-        </div>
-
-        <div class="scheduler-content">
-          <div class="alert-form">
-            <h3>Create New Alert</h3>
-            <form id="alertForm">
-              <div class="form-group">
-                <label for="alertName">Alert Name</label>
-                <input type="text" id="alertName" required placeholder="e.g., Rain Alert">
-              </div>
-              
-              <div class="form-group">
-                <label for="alertLocation">Location</label>
-                <input type="text" id="alertLocation" required placeholder="City name">
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="alertType">Alert Type</label>
-                  <select id="alertType" required>
-                    <option value="">Select type</option>
-                    <option value="temperature">Temperature</option>
-                    <option value="rain">Rain</option>
-                    <option value="snow">Snow</option>
-                    <option value="wind">Wind</option>
-                    <option value="humidity">Humidity</option>
-                  </select>
-                </div>
-                
-                <div class="form-group">
-                  <label for="alertCondition">Condition</label>
-                  <select id="alertCondition" required>
-                    <option value="">Select condition</option>
-                    <option value="above">Above</option>
-                    <option value="below">Below</option>
-                    <option value="equals">Equals</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="alertValue">Threshold Value</label>
-                <input type="number" id="alertValue" required placeholder="Enter value">
-              </div>
-
-              <div class="form-group">
-                <label for="alertTime">Check Time</label>
-                <input type="time" id="alertTime" required>
-              </div>
-
-              <div class="form-group">
-                <label for="alertFrequency">Frequency</label>
-                <select id="alertFrequency" required>
-                  <option value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                  <option value="monthly">Monthly</option>
-                </select>
-              </div>
-
-              <button type="submit" class="btn-primary">Create Alert</button>
-            </form>
-          </div>
-
-          <div class="active-alerts">
-            <h3>Active Alerts</h3>
-            <div class="alerts-list" id="activeAlertsList">
-              <!-- Active alerts will be populated by JavaScript -->
+        <!-- Left: Task/Event Form Card -->
+        <div class="scheduler-card task-form">
+          <div class="card-icon"><i class="fas fa-calendar-plus"></i></div>
+          <h3>Create New Event</h3>
+          <form id="taskForm">
+            <div class="form-group">
+              <label for="taskName">Event</label>
+              <select id="taskName" required>
+                <option value="">Select an event</option>
+                <option value="Picnic">Picnic</option>
+                <option value="Morning Jog">Morning Jog</option>
+                <option value="Grocery Shopping">Grocery Shopping</option>
+                <option value="School Run">School Run</option>
+                <option value="Work Commute">Work Commute</option>
+                <option value="Outdoor Meeting">Outdoor Meeting</option>
+                <option value="Gym">Gym</option>
+                <option value="Dog Walk">Dog Walk</option>
+                <option value="Other">Other</option>
+              </select>
+              <input type="text" id="customTaskName" placeholder="Enter custom event" style="display:none; margin-top:8px;" />
             </div>
+            <div class="form-group">
+              <label for="taskLocation">Location</label>
+              <input type="text" id="taskLocation" required placeholder="City or click map">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="taskDate">Date</label>
+                <input type="date" id="taskDate" required>
+              </div>
+              <div class="form-group">
+                <label for="taskTime">Time</label>
+                <input type="time" id="taskTime" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="taskNotes">Notes</label>
+              <textarea id="taskNotes" rows="2" placeholder="Optional notes..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Add Event</button>
+          </form>
+        </div>
+        <!-- Right: Map Card -->
+        <div class="scheduler-card map-card">
+          <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div>
+          <h3>Event Map & Weather</h3>
+          <div id="map" style="width:100%;height:350px;border-radius:18px;overflow:hidden;"></div>
+          <!-- Weather Legend inside map card -->
+          <div class="legend-card" style="box-shadow:none;padding:0;margin-top:1.2rem;">
+            <h3 style="margin-bottom:0.5rem;font-size:1.1rem;">Weather Layers</h3>
+            <div id="weatherLegendStatic"></div>
           </div>
+        </div>
+        <!-- Event List Card -->
+        <div class="scheduler-card event-list-card">
+          <div class="card-icon"><i class="fas fa-list"></i></div>
+          <h3>Added Events</h3>
+          <div id="eventList"></div>
         </div>
       </div>
     </div>
 
-    <script type="module" src="script.js?v=1.0"></script>
+    <footer id="footer" data-scroll-section>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About WeatherScheduler</h3>
+          <p>We are a weather monitoring platform dedicated to keeping you informed and prepared for any weather conditions.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: info@weatherscheduler.com</p>
+          <p>Phone: +1 (555) 123-4567</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="scheduler.html">Scheduler</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Weather Alert Scheduler. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="scheduler.js"></script>
   </body>
 </html> 
