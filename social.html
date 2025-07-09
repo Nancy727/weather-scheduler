@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Impact - Weather Alert Scheduler</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="common.css">
+  <style>
+    :root {
+      --primary-blue: #1E40AF;
+      --secondary-blue: #3B82F6;
+      --accent-blue: #60A5FA;
+      --primary-green: #059669;
+      --secondary-green: #10B981;
+      --accent-green: #34D399;
+      --primary-orange: #EA580C;
+      --secondary-orange: #F97316;
+      --accent-orange: #FB923C;
+      --neutral-50: #F8FAFC;
+      --neutral-100: #F1F5F9;
+      --neutral-200: #E2E8F0;
+      --neutral-300: #CBD5E1;
+      --neutral-400: #94A3B8;
+      --neutral-500: #64748B;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1E293B;
+      --neutral-900: #0F172A;
+      --white: #FFFFFF;
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
+      color: var(--neutral-700);
+      line-height: 1.6;
+    }
+
+    .social-impact-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 120px 2rem 4rem 2rem;
+      min-height: 100vh;
+    }
+
+    .social-impact-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .social-impact-header h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 50%, var(--accent-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .social-impact-header p {
+      font-size: 1.25rem;
+      color: var(--neutral-600);
+      max-width: 800px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    .social-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .social-card {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--neutral-200);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .social-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue), var(--accent-blue));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .social-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .social-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--accent-blue);
+    }
+
+    .social-card.disaster {
+      background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
+    }
+
+    .social-card.disaster::before {
+      background: linear-gradient(90deg, var(--primary-orange), var(--secondary-orange), var(--accent-orange));
+    }
+
+    .social-card.health {
+      background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%);
+    }
+
+    .social-card.health::before {
+      background: linear-gradient(90deg, var(--primary-green), var(--secondary-green), var(--accent-green));
+    }
+
+    .social-card.agriculture {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FFFFFF 100%);
+    }
+
+    .social-card.agriculture::before {
+      background: linear-gradient(90deg, #D97706, #F59E0B, #FCD34D);
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .disaster .icon-container {
+      background: linear-gradient(135deg, var(--secondary-orange), var(--accent-orange));
+    }
+
+    .health .icon-container {
+      background: linear-gradient(135deg, var(--secondary-green), var(--accent-green));
+    }
+
+    .agriculture .icon-container {
+      background: linear-gradient(135deg, #F59E0B, #FCD34D);
+    }
+
+    .social-card .icon {
+      font-size: 2.5rem;
+      color: var(--white);
+      z-index: 1;
+    }
+
+    .social-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--neutral-800);
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    .social-card p {
+      font-size: 1.1rem;
+      color: var(--neutral-600);
+      margin-bottom: 2rem;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1rem;
+      color: var(--neutral-700);
+      padding: 0.75rem 1rem;
+      background: var(--neutral-50);
+      border-radius: 12px;
+      border: 1px solid var(--neutral-200);
+      transition: all 0.3s ease;
+    }
+
+    .feature-list li:hover {
+      background: var(--neutral-100);
+      border-color: var(--accent-blue);
+      transform: translateX(4px);
+    }
+
+    .disaster .feature-list li i {
+      color: var(--secondary-orange);
+      font-size: 1.1rem;
+    }
+
+    .health .feature-list li i {
+      color: var(--secondary-green);
+      font-size: 1.1rem;
+    }
+
+    .agriculture .feature-list li i {
+      color: #F59E0B;
+      font-size: 1.1rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .card-actions button {
+      padding: 0.875rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-actions .primary {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-actions .primary:hover {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .disaster .card-actions .primary {
+      background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+    }
+
+    .disaster .card-actions .primary:hover {
+      background: linear-gradient(135deg, var(--secondary-orange), var(--accent-orange));
+    }
+
+    .health .card-actions .primary {
+      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    }
+
+    .health .card-actions .primary:hover {
+      background: linear-gradient(135deg, var(--secondary-green), var(--accent-green));
+    }
+
+    .agriculture .card-actions .primary {
+      background: linear-gradient(135deg, #D97706, #F59E0B);
+    }
+
+    .agriculture .card-actions .primary:hover {
+      background: linear-gradient(135deg, #F59E0B, #FCD34D);
+    }
+
+    .card-actions .secondary {
+      background: var(--white);
+      color: var(--neutral-700);
+      border: 2px solid var(--neutral-300);
+    }
+
+    .card-actions .secondary:hover {
+      background: var(--neutral-50);
+      border-color: var(--accent-blue);
+      color: var(--primary-blue);
+    }
+
+    @media (max-width: 768px) {
+      .social-impact-container {
+        padding: 100px 1rem 2rem 1rem;
+      }
+      
+      .social-cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .social-card {
+        padding: 2rem;
+      }
+      
+      .card-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .card-actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-cloud-sun"></i>
+        <span>WeatherScheduler</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="scheduler.html">Scheduler</a>
+        <a href="about.html">About</a>
+        <a href="social.html" class="active">Social Impact</a>
+        <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+      <div class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="social-impact-container">
+    <div class="social-impact-header">
+      <h1>Social Impact Features</h1>
+      <p>Explore our top 3 high-impact modules for disaster response, health protection, and smart agriculture—designed to save lives, protect communities, and empower farmers worldwide.</p>
+    </div>
+
+    <div class="social-cards">
+      <!-- Disaster Response -->
+      <div class="social-card disaster">
+        <div class="icon-container">
+          <i class="fas fa-exclamation-triangle icon"></i>
+        </div>
+        <h2>Disaster Response Mode</h2>
+        <p>Real-time severe weather alerts, evacuation routes, and shelter mapping. Prioritizes tornado, hurricane, and flood warnings for your safety.</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-bolt"></i> NOAA-powered live alerts</li>
+          <li><i class="fas fa-route"></i> Automated evacuation routes</li>
+          <li><i class="fas fa-map-marked-alt"></i> Danger zones & safe shelters</li>
+          <li><i class="fas fa-bell"></i> Push notifications & banners</li>
+        </ul>
+        <div class="card-actions">
+          <button class="primary" onclick="window.open('disaster-response.html', '_blank')">Learn More</button>
+          <button class="secondary" onclick="alert('Demo coming soon!')">Preview Demo</button>
+        </div>
+      </div>
+
+      <!-- Health Protection -->
+      <div class="social-card health">
+        <div class="icon-container">
+          <i class="fas fa-heartbeat icon"></i>
+        </div>
+        <h2>Health Protection System</h2>
+        <p>Live air quality monitoring, personalized risk alerts, and smart rescheduling for sensitive groups. Stay safe from pollution and allergens.</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-smog"></i> AirVisual AQI integration</li>
+          <li><i class="fas fa-lungs"></i> Animated health dashboard</li>
+          <li><i class="fas fa-user-shield"></i> Personalized risk alerts</li>
+          <li><i class="fas fa-bell"></i> Mask & medication reminders</li>
+        </ul>
+        <div class="card-actions">
+          <button class="primary" onclick="window.open('health-protection.html', '_blank')">Learn More</button>
+          <button class="secondary" onclick="alert('Demo coming soon!')">Preview Demo</button>
+        </div>
+      </div>
+
+      <!-- Agriculture Assistant -->
+      <div class="social-card agriculture">
+        <div class="icon-container">
+          <i class="fas fa-tractor icon"></i>
+        </div>
+        <h2>Multilingual Agricultural Assistant</h2>
+        <p>Soil-specific planting advice, crop calendars, and voice guidance in English, Spanish, Hindi, and Mandarin. Empowering farmers everywhere.</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-seedling"></i> SoilGrids & crop planner</li>
+          <li><i class="fas fa-language"></i> Multilingual support</li>
+          <li><i class="fas fa-calendar-alt"></i> Interactive crop calendar</li>
+          <li><i class="fas fa-volume-up"></i> Voice & print guides</li>
+        </ul>
+        <div class="card-actions">
+          <button class="primary" onclick="window.open('agriculture-alert.html', '_blank')">Learn More</button>
+          <button class="secondary" onclick="alert('Demo coming soon!')">Preview Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>About WeatherScheduler</h3>
+        <p>We are a weather monitoring platform dedicated to keeping you informed and prepared for any weather conditions.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: info@weatherscheduler.com</p>
+        <p>Phone: +1 (555) 123-4567</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="scheduler.html">Scheduler</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Weather Alert Scheduler. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Simple fallback to ensure cards are visible
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.social-card');
+      console.log('Found', cards.length, 'social cards');
+      
+      cards.forEach((card, index) => {
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
+        card.style.transform = 'translateY(0)';
+      });
+    });
+  </script>
+</body>
+</html>

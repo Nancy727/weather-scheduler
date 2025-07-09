@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Protection System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .health-page {
+            background: linear-gradient(135deg, #EDE7F6 0%, #F3E5F5 100%);
+            min-height: 100vh;
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .back-nav-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .back-nav-btn {
+            background: linear-gradient(135deg, #8E24AA, #6A1B9A);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(142, 36, 170, 0.3);
+        }
+
+        .back-nav-btn:hover {
+            background: linear-gradient(135deg, #6A1B9A, #4A148C);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(142, 36, 170, 0.4);
+        }
+
+        .back-nav-btn .material-icons {
+            font-size: 18px;
+        }
+
+        .aqi-alert {
+            background: linear-gradient(135deg, #8E24AA 0%, #6A1B9A 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(142, 36, 170, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .aqi-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .aqi-icon {
+            font-size: 32px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .uv-meter {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .meter-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .uv-scale {
+            width: 100%;
+            height: 10px;
+            position: relative;
+            background: linear-gradient(90deg, #00C853 0%, #FFD600 50%, #DD2C00 100%);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .uv-indicator {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: #304FFE;
+            transition: left 0.3s ease;
+        }
+
+        .indicator-text {
+            text-align: center;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .pollen-tracker {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .pollen-severity {
+            background: #FFAB00;
+            border-radius: 5px;
+            height: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .pollen-level {
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, #FFC400 0%, #FFD600 50%, #FFEA00 100%);
+            border-radius: 5px;
+        }
+
+        .medication-reminders {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .reminder-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .reminder-text {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .reminder-time {
+            font-size: 14px;
+            color: #757575;
+        }
+
+        .clean-air-map {
+            background: #E0F7FA;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .map-header {
+            background: #26A69A;
+            color: white;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #air-quality-map {
+            height: 444px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            
+            .clean-air-map {
+                height: 300px;
+            }
+            
+            #air-quality-map {
+                height: 244px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="health-page">
+        <!-- Navigation Back Button -->
+        <div class="back-nav-container">
+            <button class="back-nav-btn" onclick="window.history.back()">
+                <span class="material-icons">arrow_back</span>
+                <span>Back to Social Impact</span>
+            </button>
+        </div>
+
+        <!-- AQI Alert -->
+        <div class="aqi-alert">
+            <div class="aqi-info">
+                <span class="material-icons aqi-icon">air</span>
+                <span>UNHEALTHY AIR (AQI 158) • PM2.5: 72μg/m³</span>
+            </div>
+            <div>Close windows, use N95 masks</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div class="dashboard">
+                <!-- UV Index Meter -->
+                <div class="uv-meter">
+                    <div class="meter-header">
+                        <span class="material-icons">wb_sunny</span>
+                        <span>UV Index</span>
+                    </div>
+                    <div class="uv-scale">
+                        <div class="uv-indicator" style="left: 45%;"></div>
+                    </div>
+                    <div class="indicator-text">UV Level: 7 | Burn Time: 20 Minutes</div>
+                </div>
+
+                <!-- Pollen Tracker -->
+                <div class="pollen-tracker">
+                    <div class="meter-header">
+                        <span class="material-icons">spa</span>
+                        <span>Pollen Tracker</span>
+                    </div>
+                    <div class="pollen-severity">
+                        <div class="pollen-level"></div>
+                    </div>
+                    <div class="indicator-text">High Pollen Levels</div>
+                </div>
+
+                <!-- Medication Reminders -->
+                <div class="medication-reminders">
+                    <div class="meter-header">
+                        <span class="material-icons">medication</span>
+                        <span>Medication Reminders</span>
+                    </div>
+                    <div class="reminder-item">
+                        <div class="reminder-text">Take inhaler</div>
+                        <div class="reminder-time">2PM</div>
+                    </div>
+                    <div class="reminder-item">
+                        <div class="reminder-text">Antihistamine</div>
+                        <div class="reminder-time">8AM</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clean Air Map -->
+            <div class="clean-air-map">
+                <div class="map-header">
+                    <span class="material-icons">map</span>
+                    <span>Air Quality Map</span>
+                </div>
+                <div id="air-quality-map"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
