@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Response System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .disaster-page {
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            min-height: 100vh;
+            color: white;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .back-nav-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .back-nav-btn {
+            background: linear-gradient(135deg, #E53935, #C62828);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+        }
+
+        .back-nav-btn:hover {
+            background: linear-gradient(135deg, #C62828, #B71C1C);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.4);
+        }
+
+        .back-nav-btn .material-icons {
+            font-size: 18px;
+        }
+
+        .emergency-header {
+            background: linear-gradient(135deg, #E53935 0%, #C62828 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 18px;
+            animation: pulse 0.5s infinite;
+            box-shadow: 0 4px 16px rgba(229, 57, 53, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: sweep 2s infinite;
+        }
+
+        .emergency-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tornado-icon {
+            font-size: 32px;
+            animation: spin 2s linear infinite;
+        }
+
+        .emergency-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .mute-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .mute-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .countdown {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            padding: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .evacuation-map-container {
+            background: #2A2A3E;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            height: 600px;
+        }
+
+        .map-header {
+            background: #1E88E5;
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .map-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .layer-toggle {
+            display: flex;
+            gap: 8px;
+        }
+
+        .layer-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .layer-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        #evacuation-map {
+            height: 544px;
+            width: 100%;
+        }
+
+        .action-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .family-checkin {
+            background: #2A2A3E;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .checkin-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #1E88E5;
+        }
+
+        .safe-button {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .safe-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .safe-button.confirmed {
+            background: linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%);
+        }
+
+        .status-list {
+            margin-top: 16px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .status-safe {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-unknown {
+            background: #FFA726;
+            color: white;
+        }
+
+        .emergency-contacts {
+            background: #2A2A3E;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .contacts-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #E53935;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .contact-911 { background: #E53935; }
+        .contact-medical { background: #FF5722; }
+        .contact-fire { background: #FF9800; }
+        .contact-police { background: #3F51B5; }
+
+        .call-btn {
+            background: #1E88E5;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .call-btn:hover {
+            background: #1976D2;
+            transform: translateY(-1px);
+        }
+
+        .shelter-info {
+            background: #2A2A3E;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .shelter-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #4CAF50;
+        }
+
+        .shelter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .shelter-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .shelter-name {
+            font-weight: 500;
+            color: white;
+        }
+
+        .shelter-capacity {
+            font-size: 12px;
+            color: #B0B0B0;
+        }
+
+        .capacity-bar {
+            width: 60px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .capacity-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50 0%, #FF9800 70%, #E53935 100%);
+            transition: width 0.3s ease;
+        }
+
+        .navigate-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            
+            .evacuation-map-container {
+                height: 400px;
+            }
+            
+            #evacuation-map {
+                height: 344px;
+            }
+            
+            .emergency-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes sweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="disaster-page">
+        <!-- Navigation Back Button -->
+        <div class="back-nav-container">
+            <button class="back-nav-btn" onclick="window.history.back()">
+                <span class="material-icons">arrow_back</span>
+                <span>Back to Social Impact</span>
+            </button>
+        </div>
+
+        <!-- Emergency Header -->
+        <div class="emergency-header">
+            <div class="emergency-content">
+                <span class="material-icons tornado-icon">tornado</span>
+                <span>TORNADO WARNING • 3km NW • SEEK SHELTER NOW</span>
+            </div>
+            <div class="emergency-controls">
+                <button class="mute-btn" onclick="toggleMute()">
+                    <span class="material-icons">volume_up</span>
+                    Mute
+                </button>
+                <div class="countdown" id="countdown">Landfall in 1h 22m</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Evacuation Map -->
+            <div class="evacuation-map-container">
+                <div class="map-header">
+                    <div class="map-title">
+                        <span class="material-icons">map</span>
+                        <span>Evacuation Routes & Shelters</span>
+                    </div>
+                    <div class="layer-toggle">
+                        <button class="layer-btn active" data-layer="danger">Danger Zone</button>
+                        <button class="layer-btn active" data-layer="routes">Safe Routes</button>
+                        <button class="layer-btn active" data-layer="shelters">Shelters</button>
+                    </div>
+                </div>
+                <div id="evacuation-map"></div>
+            </div>
+
+            <!-- Action Panel -->
+            <div class="action-panel">
+                <!-- Family Check-in -->
+                <div class="family-checkin">
+                    <div class="checkin-header">
+                        <span class="material-icons">family_restroom</span>
+                        <span>Family Check-In</span>
+                    </div>
+                    <button class="safe-button" onclick="markSafe()">
+                        <span class="material-icons">check_circle</span>
+                        <span id="safe-button-text">I'm Safe</span>
+                    </button>
+                    <ul class="status-list">
+                        <li class="status-item">
+                            <div class="status-icon status-safe">
+                                <span class="material-icons">check</span>
+                            </div>
+                            <span>John Smith - Safe</span>
+                        </li>
+                        <li class="status-item">
+                            <div class="status-icon status-unknown">
+                                <span class="material-icons">help</span>
+                            </div>
+                            <span>Sarah Smith - Unknown</span>
+                        </li>
+                        <li class="status-item">
+                            <div class="status-icon status-safe">
+                                <span class="material-icons">check</span>
+                            </div>
+                            <span>Mom - Safe</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Emergency Contacts -->
+                <div class="emergency-contacts">
+                    <div class="contacts-header">
+                        <span class="material-icons">emergency</span>
+                        <span>Emergency Contacts</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-info">
+                            <div class="contact-icon contact-911">
+                                <span class="material-icons">emergency</span>
+                            </div>
+                            <div>
+                                <div>Emergency Services</div>
+                                <div style="font-size: 12px; color: #B0B0B0;">911</div>
+                            </div>
+                        </div>
+                        <button class="call-btn" onclick="makeCall('911')">
+                            <span class="material-icons">phone</span>
+                        </button>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-info">
+                            <div class="contact-icon contact-medical">
+                                <span class="material-icons">local_hospital</span>
+                            </div>
+                            <div>
+                                <div>Medical Emergency</div>
+                                <div style="font-size: 12px; color: #B0B0B0;">Emergency Medical</div>
+                            </div>
+                        </div>
+                        <button class="call-btn" onclick="makeCall('medical')">
+                            <span class="material-icons">phone</span>
+                        </button>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-info">
+                            <div class="contact-icon contact-fire">
+                                <span class="material-icons">local_fire_department</span>
+                            </div>
+                            <div>
+                                <div>Fire Department</div>
+                                <div style="font-size: 12px; color: #B0B0B0;">Fire & Rescue</div>
+                            </div>
+                        </div>
+                        <button class="call-btn" onclick="makeCall('fire')">
+                            <span class="material-icons">phone</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Shelter Information -->
+                <div class="shelter-info">
+                    <div class="shelter-header">
+                        <span class="material-icons">home</span>
+                        <span>Nearest Shelters</span>
+                    </div>
+                    <div class="shelter-item">
+                        <div class="shelter-details">
+                            <div class="shelter-name">Central Community Center</div>
+                            <div class="shelter-capacity">0.8 miles • 65% capacity</div>
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <button class="navigate-btn" onclick="navigateToShelter('central')">Navigate</button>
+                    </div>
+                    <div class="shelter-item">
+                        <div class="shelter-details">
+                            <div class="shelter-name">North Elementary School</div>
+                            <div class="shelter-capacity">1.2 miles • 45% capacity</div>
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <button class="navigate-btn" onclick="navigateToShelter('north')">Navigate</button>
+                    </div>
+                    <div class="shelter-item">
+                        <div class="shelter-details">
+                            <div class="shelter-name">South High School</div>
+                            <div class="shelter-capacity">2.1 miles • 85% capacity</div>
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <button class="navigate-btn" onclick="navigateToShelter('south')">Navigate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="disaster-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Weather Alert Scheduler</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="loader">
+      <div id="yellow"></div>
+      <div id="yellow1"></div>
+      <video id="bg-video" autoplay loop muted playsinline>
+        <source
+          src="https://cdn.pixabay.com/video/2019/09/06/26610-359604037_large.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <h1>
+<!--        case 1  -->
+        Weather Alert <em>Scheduler</em><br> Stay <em>Informed</em> and <em>Prepared</em>
+      </h1>
+    </div>
+
+    <div id="nav">
+      <div class="nav-container">
+        <div class="logo">
+          <i class="fas fa-cloud-sun"></i>
+          <span>WeatherScheduler</span>
+        </div>
+        <div class="nav-links">
+          <button class="nav-close" id="navCloseBtn" aria-label="Close menu" style="display:none;position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;color:#333;z-index:1002;cursor:pointer;">
+            &times;
+          </button>
+          <a href="index.html" class="active">Home</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="social.html">Social Impact</a>
+          <a href="scheduler.html">Scheduler</a>
+          <a href="about.html">About</a>
+          <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </div>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <button onclick="window.location.reload()" style="background: none; border: none; color: white; cursor: pointer; margin-left: 10px;">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="main" data-scroll-container>
+      <!-- Home Page -->
+      <div id="home" class="page" data-scroll data-scroll-speed="-8" data-scroll-section>
+        <h1>
+        Weather Alert <em>Scheduler</em> <br> Stay <em>Informed</em> and <em>Prepared</em>
+        </h1>
+      </div>
+
+      <!-- Works/Features Section -->
+      <div id="works" data-scroll-section>
+        <div class="elem" data-video="https://cdn.pixabay.com/video/2019/09/06/26610-359604037_large.mp4">
+          <h2>REAL-TIME WEATHER</h2>
+          <div class="moving">
+            <div class="blur"></div>
+            <div class="moving-in">
+              <h5>LIVE DATA</h5>
+              <h5>ACCURATE FORECASTS</h5>
+              <h5>GLOBAL COVERAGE</h5>
+              <h5>INSTANT UPDATES</h5>
+              <h5>WEATHER ICONS</h5>
+            </div>
+            <div class="moving-in">
+              <h5>LIVE DATA</h5>
+              <h5>ACCURATE FORECASTS</h5>
+              <h5>GLOBAL COVERAGE</h5>
+              <h5>INSTANT UPDATES</h5>
+              <h5>WEATHER ICONS</h5>
+            </div>
+          </div>
+        </div>
+        <div class="elem" data-video="https://cdn.pixabay.com/video/2019/09/06/26610-359604037_large.mp4">
+          <h2>CUSTOM ALERTS</h2>
+          <div class="moving">
+            <div class="blur"></div>
+            <div class="moving-in">
+              <h5>TEMPERATURE ALERTS</h5>
+              <h5>RAIN WARNINGS</h5>
+              <h5>WIND NOTIFICATIONS</h5>
+              <h5>HUMIDITY MONITORING</h5>
+              <h5>SCHEDULED CHECKS</h5>
+            </div>
+            <div class="moving-in">
+              <h5>TEMPERATURE ALERTS</h5>
+              <h5>RAIN WARNINGS</h5>
+              <h5>WIND NOTIFICATIONS</h5>
+              <h5>HUMIDITY MONITORING</h5>
+              <h5>SCHEDULED CHECKS</h5>
+            </div>
+          </div>
+        </div>
+        <div class="elem" data-video="https://cdn.pixabay.com/video/2019/09/06/26610-359604037_large.mp4">
+          <h2>SMART SCHEDULING</h2>
+          <div class="moving">
+            <div class="blur"></div>
+            <div class="moving-in">
+              <h5>DAILY CHECKS</h5>
+              <h5>WEEKLY UPDATES</h5>
+              <h5>MONTHLY REPORTS</h5>
+              <h5>FLEXIBLE TIMING</h5>
+              <h5>AUTOMATED SYSTEM</h5>
+            </div>
+            <div class="moving-in">
+              <h5>DAILY CHECKS</h5>
+              <h5>WEEKLY UPDATES</h5>
+              <h5>MONTHLY REPORTS</h5>
+              <h5>FLEXIBLE TIMING</h5>
+              <h5>AUTOMATED SYSTEM</h5>
+            </div>
+          </div>
+        </div>
+        <div class="elem" data-video="https://cdn.pixabay.com/video/2019/09/06/26610-359604037_large.mp4">
+          <h2>WEATHER DASHBOARD</h2>
+          <div class="moving">
+            <div class="blur"></div>
+            <div class="moving-in">
+              <h5>INTERACTIVE CHARTS</h5>
+              <h5>VISUAL FORECASTS</h5>
+              <h5>WEATHER MAPS</h5>
+              <h5>DATA ANALYTICS</h5>
+              <h5>REAL-TIME UPDATES</h5>
+            </div>
+            <div class="moving-in">
+              <h5>INTERACTIVE CHARTS</h5>
+              <h5>VISUAL FORECASTS</h5>
+              <h5>WEATHER MAPS</h5>
+              <h5>DATA ANALYTICS</h5>
+              <h5>REAL-TIME UPDATES</h5>
+            </div>
+          </div>
+        </div>
+        <div class="elem" data-video="https://cdn.pixabay.com/video/2019/09/06/26610-359604037_large.mp4">
+          <h2>MOBILE RESPONSIVE</h2>
+          <div class="moving">
+            <div class="blur"></div>
+            <div class="moving-in">
+              <h5>MOBILE OPTIMIZED</h5>
+              <h5>TABLET FRIENDLY</h5>
+              <h5>DESKTOP EXPERIENCE</h5>
+              <h5>TOUCH INTERFACE</h5>
+              <h5>RESPONSIVE DESIGN</h5>
+            </div>
+            <div class="moving-in">
+              <h5>MOBILE OPTIMIZED</h5>
+              <h5>TABLET FRIENDLY</h5>
+              <h5>DESKTOP EXPERIENCE</h5>
+              <h5>TOUCH INTERFACE</h5>
+              <h5>RESPONSIVE DESIGN</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery/Portfolio Section -->
+      <div id="gallery" data-scroll-section>
+        <div class="gallery-header">
+          <h2>Weather <em>Showcase</em></h2>
+          <p>Discover the innovative features that make our weather platform exceptional</p>
+        </div>
+        <div class="gallery-masonry">
+          <div class="gallery-item large">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/27663531/12197195_2160_1440_30fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Real-time Weather <em>Monitoring</em></h3>
+                  <p>Live weather data with instant updates and accurate forecasting</p>
+                  <div class="gallery-tags">
+                    <span>Live Data</span>
+                    <span>Instant Updates</span>
+                    <span>Global Coverage</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item medium">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/3063630/3063630-uhd_2560_1440_30fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Custom Alert <em>System</em></h3>
+                  <p>Personalized weather alerts tailored to your needs</p>
+                  <div class="gallery-tags">
+                    <span>Smart Alerts</span>
+                    <span>Customizable</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item medium">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/5958064/5958064-hd_1046_1862_30fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Weather Dashboard <em>Interface</em></h3>
+                  <p>Intuitive dashboard with comprehensive weather analytics</p>
+                  <div class="gallery-tags">
+                    <span>Analytics</span>
+                    <span>Visualization</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item small">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/4237998/4237998-uhd_2560_1440_30fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Forecast <em>Analytics</em></h3>
+                  <p>Advanced weather prediction and analysis tools</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item large">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/4828773/4828773-hd_1920_1080_25fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Mobile Weather <em>App</em></h3>
+                  <p>Seamless weather experience across all devices</p>
+                  <div class="gallery-tags">
+                    <span>Mobile First</span>
+                    <span>Responsive</span>
+                    <span>Cross Platform</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item medium">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/14034818/14034818-hd_1080_1920_24fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Weather Alert <em>Notifications</em></h3>
+                  <p>Instant notifications for critical weather events</p>
+                  <div class="gallery-tags">
+                    <span>Real-time</span>
+                    <span>Critical Alerts</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item small">
+            <div class="gallery-content">
+              <video autoplay loop Amuted playsinline>
+                <source src="https://videos.pexels.com/video-files/27583824/12174976_2560_1440_30fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Climate <em>Data</em></h3>
+                  <p>Comprehensive climate information and trends</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item medium">
+            <div class="gallery-content">
+              <video autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/30885562/13206120_2560_1440_30fps.mp4" type="video/mp4">
+              </video>
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3>Weather <em>Visualization</em></h3>
+                  <p>Beautiful and informative weather data visualization</p>
+                  <div class="gallery-tags">
+                    <span>Interactive</span>
+                    <span>Beautiful UI</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer" data-scroll-section>
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About WeatherScheduler</h3>
+            <p>We are a weather monitoring platform dedicated to keeping you informed and prepared for any weather conditions.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Contact</h3>
+            <p>Email: info@weatherscheduler.com</p>
+            <p>Phone: +1 (555) 123-4567</p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="dashboard.html">Dashboard</a></li>
+              <li><a href="scheduler.html">Scheduler</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Weather Alert Scheduler. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </div>
+
+    <footer class="footer-section">
+      <div class="footer-content">
+        <div class="footer-brand">WeatherScheduler &copy; 2025</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a> |
+          <a href="dashboard.html">Dashboard</a> |
+          <a href="scheduler.html">Scheduler</a> |
+          <a href="about.html">About</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="script.js?v=1.0"></script>
+  </body>
+</html>
