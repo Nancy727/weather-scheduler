@@ -1,143 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>Scheduler - Weather Alert Scheduler</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="scheduler.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alert Scheduler</title>
+    <link rel="stylesheet" href="scheduler.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-    <script src="https://unpkg.com/leaflet-openweathermap/leaflet-openweathermap.js"></script>
-    <script src="https://unpkg.com/ngeohash@0.6.3/build/ngeohash.min.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <div id="nav">
-      <div class="nav-container">
-        <div class="logo">
-          <i class="fas fa-cloud-sun"></i>
-          <span>WeatherScheduler</span>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-cloud-sun"></i>
+                <span>WeatherAlertScheduler</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="scheduler.html" class="active">Scheduler</a>
+                <a href="social.html">Social Impact</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="scheduler.html" class="active">Scheduler</a>
-          <a href="about.html">About</a>
-          <a href="social.html">Social Impact</a>
-          <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
-        </div>
-        <div class="menu-toggle">
-          <i class="fas fa-bars"></i>
-        </div>
-      </div>
     </div>
 
     <div class="page-container">
-      <div class="scheduler-header">
-        <h1>Weather Event Scheduler</h1>
-        <p>Plan, prioritize, and visualize your events with live weather and map integration</p>
-      </div>
-      <div class="scheduler-container">
-        <!-- Left: Task/Event Form Card -->
-        <div class="scheduler-card task-form">
-          <div class="card-icon"><i class="fas fa-calendar-plus"></i></div>
-          <h3>Create New Event</h3>
-          <form id="taskForm">
-            <div class="form-group">
-              <label for="taskName">Event</label>
-              <select id="taskName" required>
-                <option value="">Select an event</option>
-                <option value="Picnic">Picnic</option>
-                <option value="Morning Jog">Morning Jog</option>
-                <option value="Grocery Shopping">Grocery Shopping</option>
-                <option value="School Run">School Run</option>
-                <option value="Work Commute">Work Commute</option>
-                <option value="Outdoor Meeting">Outdoor Meeting</option>
-                <option value="Gym">Gym</option>
-                <option value="Dog Walk">Dog Walk</option>
-                <option value="Other">Other</option>
-              </select>
-              <input type="text" id="customTaskName" placeholder="Enter custom event" style="display:none; margin-top:8px;" />
+        <!-- Weather Alert Panel -->
+        <div class="weather-alert-panel" id="weatherAlertPanel">
+            <div class="weather-current">
+                <div class="weather-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="currentLocation">Loading location...</span>
+                </div>
+                <div class="weather-now">
+                    <i id="currentWeatherIcon" class="fas fa-cloud"></i>
+                    <span id="currentWeather">Loading...</span>
+                </div>
+                <div class="weather-upcoming">
+                    <i class="fas fa-clock"></i>
+                    <span id="upcomingWeather">Loading forecast...</span>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="taskLocation">Location</label>
-              <input type="text" id="taskLocation" required placeholder="City or click map">
+            <div class="weather-alerts" id="weatherAlerts">
+                <!-- Alerts will be populated here -->
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="taskDate">Date</label>
-                <input type="date" id="taskDate" required>
-              </div>
-              <div class="form-group">
-                <label for="taskTime">Time</label>
-                <input type="time" id="taskTime" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="taskNotes">Notes</label>
-              <textarea id="taskNotes" rows="2" placeholder="Optional notes..."></textarea>
-            </div>
-            <button type="submit" class="btn-primary">Add Event</button>
-          </form>
         </div>
-        <!-- Right: Map Card -->
-        <div class="scheduler-card map-card">
-          <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div>
-          <h3>Event Map & Weather</h3>
-          <div id="map" style="width:100%;height:350px;border-radius:18px;overflow:hidden;"></div>
-          <!-- Weather Legend inside map card -->
-          <div class="legend-card" style="box-shadow:none;padding:0;margin-top:1.2rem;">
-            <h3 style="margin-bottom:0.5rem;font-size:1.1rem;">Weather Layers</h3>
-            <div id="weatherLegendStatic"></div>
-          </div>
+
+        <!-- Daily Weather Digest -->
+        <div class="weather-digest" id="weatherDigest">
+            <div class="digest-header">
+                <i class="fas fa-calendar-day"></i>
+                <h3>Today's Weather Summary</h3>
+            </div>
+            <div class="digest-content">
+                <div class="digest-item safe">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="safeEventsCount">0</span> Safe Events
+                </div>
+                <div class="digest-item risky">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="riskyEventsCount">0</span> Risky Events
+                </div>
+                <div class="digest-item reschedule">
+                    <i class="fas fa-sync-alt"></i>
+                    <span id="rescheduleCount">0</span> Reschedule Suggested
+                </div>
+            </div>
         </div>
-        <!-- Event List Card -->
-        <div class="scheduler-card event-list-card">
-          <div class="card-icon"><i class="fas fa-list"></i></div>
-          <h3>Added Events</h3>
-          <div id="eventList"></div>
+
+        <div class="scheduler-header">
+            <h1>Weather Alert Scheduler</h1>
+            <p>Plan, prioritize, and visualize your events with real-time weather alerts and smart recommendations</p>
         </div>
-      </div>
+        
+        <div class="scheduler-container">
+            <div class="form-section">
+                <h2>Add New Event</h2>
+                <form id="eventForm">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title:</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDate">Date:</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventTime">Time:</label>
+                        <input type="time" id="eventTime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventLocation">Location:</label>
+                        <div class="location-input-group">
+                            <input type="text" id="eventLocation" placeholder="Enter location or use current location" required>
+                            <button type="button" id="getLocationBtn" class="location-btn">
+                                <span class="location-icon">📍</span>
+                                Get Current Location
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventType">Event Type:</label>
+                        <select id="eventType" required>
+                            <option value="">Select event type</option>
+                            <option value="outdoor">Outdoor Activity</option>
+                            <option value="indoor">Indoor Activity</option>
+                            <option value="travel">Travel</option>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="emergency">Emergency</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDescription">Description:</label>
+                        <textarea id="eventDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-plus"></i>
+                        Add Event
+                    </button>
+                </form>
+            </div>
+
+            <div class="map-section">
+                <h3>Location Map</h3>
+                <div id="map" class="map-container"></div>
+                <div class="map-info">
+                    <p id="mapInfo">Click "Get Current Location" to see your location on the map</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Filters -->
+        <div class="event-filters">
+            <div class="filter-group">
+                <label class="filter-label">
+                    <input type="checkbox" id="filterHighPriority" class="filter-checkbox">
+                    <span class="filter-text">High Priority Only</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" id="filterWeatherAffected" class="filter-checkbox">
+                    <span class="filter-text">Weather Affected</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" id="filterRisky" class="filter-checkbox">
+                    <span class="filter-text">Risky Events</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" id="filterToday" class="filter-checkbox">
+                    <span class="filter-text">Today's Events</span>
+                </label>
+            </div>
+            <div class="sort-controls">
+                <label for="sortBy">Sort by:</label>
+                <select id="sortBy" class="sort-select">
+                    <option value="priority">Priority (High to Low)</option>
+                    <option value="datetime">Date & Time</option>
+                    <option value="type">Event Type</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="events-section">
+            <div class="events-header">
+                <h2>Scheduled Events</h2>
+                <div class="header-actions">
+                    <button id="topPriorityBtn" class="priority-btn">
+                        <i class="fas fa-crown"></i>
+                        View Top Priority
+                    </button>
+                    <button id="refreshWeatherBtn" class="refresh-btn">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh Weather
+                    </button>
+                </div>
+            </div>
+            <div class="events-container" id="eventsContainer">
+                <!-- Events will be populated here -->
+            </div>
+        </div>
     </div>
 
-    <footer id="footer" data-scroll-section>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>About WeatherScheduler</h3>
-          <p>We are a weather monitoring platform dedicated to keeping you informed and prepared for any weather conditions.</p>
-        </div>
-        <div class="footer-section">
-          <h3>Contact</h3>
-          <p>Email: info@weatherscheduler.com</p>
-          <p>Phone: +1 (555) 123-4567</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-          </div>
-        </div>
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="scheduler.html">Scheduler</a></li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Weather Alert Scheduler. All Rights Reserved.</p>
-      </div>
-    </footer>
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script type="module" src="scheduler.js"></script>
-  </body>
+</body>
 </html> 

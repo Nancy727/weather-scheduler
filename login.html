@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Weather Scheduler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="scheduler.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/scheduler.css" />
     <style>
       body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
       .login-card {
@@ -103,22 +103,41 @@
         <button type="submit" class="btn-primary">Login</button>
       </form>
       <div style="margin: 1.2rem 0 0.5rem 0; text-align: center; color: #888; font-size: 1rem;">Don't have an account?</div>
-      <a href="signup.html" class="back-link" style="color:#4f46e5;font-weight:600;"><i class="fas fa-user-plus"></i> Sign up</a>
-      <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      <a href="/signup.html" class="back-link" style="color:#4f46e5;font-weight:600;"><i class="fas fa-user-plus"></i> Sign up</a>
+      <a href="/index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
     </div>
+    <script src="js/auth-nav.js"></script>
     <script>
-      document.getElementById('loginForm').addEventListener('submit', function(e) {
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         const errorDiv = document.getElementById('loginError');
-        // Simple demo: accept any non-empty email/password
-        if (email && password) {
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('userEmail', email);
-          window.location.href = 'index.html';
-        } else {
+        if (!email || !password) {
           errorDiv.textContent = 'Please enter a valid email and password.';
+          errorDiv.style.display = '';
+          return;
+        }
+        try {
+          const res = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            errorDiv.textContent = data.error || 'Login failed.';
+            errorDiv.style.display = '';
+            return;
+          }
+          errorDiv.style.display = 'none';
+          // Store user info in sessionStorage for this session
+          sessionStorage.setItem('isLoggedIn', 'true');
+          sessionStorage.setItem('userName', data.name);
+          sessionStorage.setItem('userEmail', data.email);
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          errorDiv.textContent = 'Server error. Please try again.';
           errorDiv.style.display = '';
         }
       });

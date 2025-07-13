@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <style>
         .disaster-page {
             background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
@@ -16,19 +16,12 @@
             font-family: 'Rubik', sans-serif;
         }
 
-        .back-nav-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-
         .back-nav-btn {
-            background: linear-gradient(135deg, #E53935, #C62828);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
@@ -36,13 +29,10 @@
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
         }
 
         .back-nav-btn:hover {
-            background: linear-gradient(135deg, #C62828, #B71C1C);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.4);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .back-nav-btn .material-icons {
@@ -76,10 +66,23 @@
         .emergency-content {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             gap: 12px;
             position: relative;
             z-index: 1;
+        }
+
+        .emergency-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .emergency-main.no-alerts {
+            justify-content: center;
+            text-align: center;
         }
 
         .tornado-icon {
@@ -92,21 +95,6 @@
             align-items: center;
             gap: 16px;
             margin-top: 12px;
-        }
-
-        .mute-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .mute-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
         }
 
         .countdown {
@@ -257,6 +245,252 @@
             color: white;
         }
 
+        .status-unsafe {
+            background: #E53935;
+            color: white;
+        }
+
+        .add-family-section {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .add-family-input {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .add-family-input input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .add-family-input input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .add-family-btn {
+            background: #1E88E5;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .add-family-btn:hover {
+            background: #1976D2;
+        }
+
+        .family-member-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .family-member-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .family-member-name {
+            font-weight: 500;
+        }
+
+        .family-status-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .status-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .status-btn.safe {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-btn.safe:hover {
+            background: #45A049;
+        }
+
+        .status-btn.unsafe {
+            background: #E53935;
+            color: white;
+        }
+
+        .status-btn.unsafe:hover {
+            background: #D32F2F;
+        }
+
+        .status-btn.unknown {
+            background: #FFA726;
+            color: white;
+        }
+
+        .status-btn.unknown:hover {
+            background: #FF9800;
+        }
+
+        .status-btn.active {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Custom Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .popup-container {
+            background: #2A2A3E;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .popup-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .popup-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .popup-icon.success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .popup-icon.warning {
+            background: #FF9800;
+            color: white;
+        }
+
+        .popup-icon.error {
+            background: #E53935;
+            color: white;
+        }
+
+        .popup-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .popup-message {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .popup-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .popup-btn.primary {
+            background: #1E88E5;
+            color: white;
+        }
+
+        .popup-btn.primary:hover {
+            background: #1976D2;
+        }
+
+        .popup-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .popup-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .popup-btn.danger {
+            background: #E53935;
+            color: white;
+        }
+
+        .popup-btn.danger:hover {
+            background: #D32F2F;
+        }
+
+        .delete-btn {
+            background: #E53935;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .delete-btn:hover {
+            background: #D32F2F;
+        }
+
+        .family-member-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .emergency-contacts {
             background: #2A2A3E;
             border-radius: 16px;
@@ -264,125 +498,68 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .contacts-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            font-weight: 600;
-            color: #E53935;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .contact-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: white;
-        }
-
-        .contact-911 { background: #E53935; }
-        .contact-medical { background: #FF5722; }
-        .contact-fire { background: #FF9800; }
-        .contact-police { background: #3F51B5; }
-
-        .call-btn {
+        /* Custom location marker styles */
+        .custom-location-marker {
             background: #1E88E5;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
         }
 
-        .call-btn:hover {
-            background: #1976D2;
-            transform: translateY(-1px);
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
-        .shelter-info {
+        /* Map interaction styles */
+        #evacuation-map {
+            cursor: crosshair;
+        }
+
+        #evacuation-map:hover {
+            cursor: crosshair;
+        }
+
+        /* Popup enhancement styles */
+        .leaflet-popup-content {
+            margin: 0;
+            padding: 0;
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: 12px;
             background: #2A2A3E;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .shelter-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            font-weight: 600;
-            color: #4CAF50;
-        }
-
-        .shelter-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .shelter-details {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .shelter-name {
-            font-weight: 500;
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .shelter-capacity {
-            font-size: 12px;
-            color: #B0B0B0;
+        .leaflet-popup-tip {
+            background: #2A2A3E;
         }
 
-        .capacity-bar {
-            width: 60px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-
-        .capacity-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50 0%, #FF9800 70%, #E53935 100%);
-            transition: width 0.3s ease;
-        }
-
-        .navigate-btn {
-            background: #4CAF50;
+        /* Map instructions */
+        .map-instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            border: none;
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 6px;
-            cursor: pointer;
             font-size: 12px;
-            font-weight: 500;
+            z-index: 1000;
+            pointer-events: none;
         }
 
         @media (max-width: 768px) {
@@ -424,25 +601,19 @@
 </head>
 <body>
     <div class="disaster-page">
-        <!-- Navigation Back Button -->
-        <div class="back-nav-container">
-            <button class="back-nav-btn" onclick="window.history.back()">
-                <span class="material-icons">arrow_back</span>
-                <span>Back to Social Impact</span>
-            </button>
-        </div>
-
         <!-- Emergency Header -->
         <div class="emergency-header">
             <div class="emergency-content">
-                <span class="material-icons tornado-icon">tornado</span>
-                <span>TORNADO WARNING • 3km NW • SEEK SHELTER NOW</span>
+                <button class="back-nav-btn" onclick="window.history.back()">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Back</span>
+                </button>
+                <div class="emergency-main">
+                    <span class="material-icons tornado-icon">tornado</span>
+                    <span>TORNADO WARNING • 3km NW • SEEK SHELTER NOW</span>
+                </div>
             </div>
             <div class="emergency-controls">
-                <button class="mute-btn" onclick="toggleMute()">
-                    <span class="material-icons">volume_up</span>
-                    Mute
-                </button>
                 <div class="countdown" id="countdown">Landfall in 1h 22m</div>
             </div>
         </div>
@@ -453,15 +624,17 @@
                 <div class="map-header">
                     <div class="map-title">
                         <span class="material-icons">map</span>
-                        <span>Evacuation Routes & Shelters</span>
+                        Interactive Disaster Map
                     </div>
                     <div class="layer-toggle">
-                        <button class="layer-btn active" data-layer="danger">Danger Zone</button>
-                        <button class="layer-btn active" data-layer="routes">Safe Routes</button>
-                        <button class="layer-btn active" data-layer="shelters">Shelters</button>
+                        <button class="layer-btn" data-layer="radar">Weather Radar</button>
+                        <button class="layer-btn" data-layer="satellite">Satellite</button>
                     </div>
                 </div>
                 <div id="evacuation-map"></div>
+                <div class="map-instructions">
+                    🌍 Global disaster areas are colored on the map. Tap any colored area to see details.
+                </div>
             </div>
 
             <!-- Action Panel -->
@@ -472,30 +645,20 @@
                         <span class="material-icons">family_restroom</span>
                         <span>Family Check-In</span>
                     </div>
-                    <button class="safe-button" onclick="markSafe()">
-                        <span class="material-icons">check_circle</span>
-                        <span id="safe-button-text">I'm Safe</span>
-                    </button>
-                    <ul class="status-list">
-                        <li class="status-item">
-                            <div class="status-icon status-safe">
-                                <span class="material-icons">check</span>
-                            </div>
-                            <span>John Smith - Safe</span>
-                        </li>
-                        <li class="status-item">
-                            <div class="status-icon status-unknown">
-                                <span class="material-icons">help</span>
-                            </div>
-                            <span>Sarah Smith - Unknown</span>
-                        </li>
-                        <li class="status-item">
-                            <div class="status-icon status-safe">
-                                <span class="material-icons">check</span>
-                            </div>
-                            <span>Mom - Safe</span>
-                        </li>
-                    </ul>
+                    
+                    <!-- Add Family Member Section -->
+                    <div class="add-family-section">
+                        <div class="add-family-input">
+                            <input type="text" id="family-member-name" placeholder="Enter family member name" maxlength="30">
+                            <button class="add-family-btn" onclick="addFamilyMember()">Add</button>
+                        </div>
+                    </div>
+
+                    <!-- Family Members List -->
+                    <div id="family-members-list">
+                        <!-- Family members will be added here dynamically -->
+                    </div>
+
                 </div>
 
                 <!-- Emergency Contacts -->
@@ -589,7 +752,25 @@
         </div>
     </div>
 
+    <!-- Custom Popup -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-container">
+            <div class="popup-header">
+                <div class="popup-icon" id="popup-icon">
+                    <span class="material-icons" id="popup-icon-text">info</span>
+                </div>
+                <div class="popup-title" id="popup-title">Title</div>
+            </div>
+            <div class="popup-message" id="popup-message">Message</div>
+            <div class="popup-buttons" id="popup-buttons">
+                <button class="popup-btn secondary" onclick="closePopup()">Cancel</button>
+                <button class="popup-btn primary" onclick="confirmPopup()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="disaster-script.js"></script>
+    <script src="js/disaster-script.js"></script>
+    <script src="js/auth-nav.js"></script>
 </body>
 </html>

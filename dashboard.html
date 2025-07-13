@@ -9,34 +9,39 @@
     <title>Dashboard - Weather Alert Scheduler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
   </head>
   <body>
     <div id="nav">
       <div class="nav-container">
         <div class="logo">
           <i class="fas fa-cloud-sun"></i>
-          <span>WeatherScheduler</span>
+          <span>WeatherAlertScheduler</span>
         </div>
         <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="dashboard.html" class="active">Dashboard</a>
-          <a href="social.html">Social Impact</a>
-          <a href="scheduler.html">Scheduler</a>
-          <a href="about.html">About</a>
-          <a href="disaster.html">Disaster Management</a>
-          <a href="health.html">Health</a>
-          <a href="agriculture.html">Agriculture</a>
-          <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+          <button class="nav-close" id="navCloseBtn" aria-label="Close menu" style="display:none;position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;color:#333;z-index:1002;cursor:pointer;">&times;</button>
+          <a href="/index.html">Home</a>
+          <a href="/dashboard.html" class="active">Dashboard</a>
+          <a href="/social.html">Social Impact</a>
+          <a href="/scheduler.html">Scheduler</a>
+          <a href="/about.html">About</a>
+          <a href="/login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
         </div>
         <div class="menu-toggle">
           <i class="fas fa-bars"></i>
         </div>
+        <button onclick="window.location.reload()" style="background: none; border: none; color: white; cursor: pointer; margin-left: 10px;">
+          <i class="fas fa-sync-alt"></i>
+        </button>
       </div>
     </div>
 
     <div class="dashboard-layout-full">
+      <div id="dashboardWelcome" class="dashboard-welcome" style="text-align:center;font-size:2rem;font-weight:600;margin-top:2rem;color:#4f46e5;"></div>
+      <div id="locationStatus" style="text-align:center;font-size:1rem;color:#666;margin-bottom:1rem;">
+        <i class="fas fa-spinner fa-spin"></i> Getting your location for personalized weather...
+      </div>
       <!-- Full Width Map Section -->
       <div class="map-section-full">
         <div class="map-header">
@@ -226,10 +231,10 @@
         <div class="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="scheduler.html">Scheduler</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+            <li><a href="/scheduler.html">Scheduler</a></li>
+            <li><a href="/about.html">About</a></li>
           </ul>
         </div>
       </div>
@@ -241,7 +246,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script type="module" src="script.js?v=1.0"></script>
-    <script type="module" src="dashboard.js"></script>
+    <script type="module" src="js/script.js?v=1.0"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    <script src="js/auth-nav.js"></script>
+    <script>
+      // Show welcome message with user's name
+      document.addEventListener('DOMContentLoaded', function() {
+        const welcomeDiv = document.getElementById('dashboardWelcome');
+        const name = sessionStorage.getItem('userName');
+        if (name && welcomeDiv) {
+          welcomeDiv.textContent = `Welcome, ${name}!`;
+        }
+      });
+    </script>
   </body>
 </html> 

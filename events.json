@@ -1,0 +1,50 @@
+{
+  "test@example.com": {
+    "events": [
+      {
+        "id": "1752301175249",
+        "user_email": "test@example.com",
+        "name": "Test Event",
+        "location": "London",
+        "date": "2025-01-15",
+        "time": "14:00",
+        "notes": "Test event",
+        "weather_priority": 2
+      }
+    ]
+  },
+  "vihananand2018@gmail.com": {
+    "events": [
+      {
+        "id": "1752301259965",
+        "user_email": "vihananand2018@gmail.com",
+        "name": "Outdoor Meeting",
+        "location": "delhi",
+        "date": "2025-07-12",
+        "time": "12:50",
+        "notes": "",
+        "weather_priority": 2
+      },
+      {
+        "id": "1752301325253",
+        "user_email": "vihananand2018@gmail.com",
+        "name": "Dog Walk",
+        "location": "delhi",
+        "date": "2025-07-12",
+        "time": "12:52",
+        "notes": "",
+        "weather_priority": 2
+      },
+      {
+        "id": "1752301479008",
+        "user_email": "vihananand2018@gmail.com",
+        "name": "Dog Walk",
+        "location": "munger",
+        "date": "2025-07-12",
+        "time": "12:54",
+        "notes": "",
+        "weather_priority": 4
+      }
+    ]
+  }
+}

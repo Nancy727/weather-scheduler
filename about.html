@@ -8,27 +8,31 @@
     <meta http-equiv="Expires" content="0" />
     <title>About - Weather Alert Scheduler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="about.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/about.css" />
   </head>
   <body>
     <div id="nav">
       <div class="nav-container">
         <div class="logo">
           <i class="fas fa-cloud-sun"></i>
-          <span>WeatherScheduler</span>
+          <span>WeatherAlertScheduler</span>
         </div>
         <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="scheduler.html">Scheduler</a>
-          <a href="about.html" class="active">About</a>
-          <a href="social.html">Social Impact</a>
-          <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+          <button class="nav-close" id="navCloseBtn" aria-label="Close menu" style="display:none;position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;color:#333;z-index:1002;cursor:pointer;">&times;</button>
+          <a href="/index.html">Home</a>
+          <a href="/dashboard.html">Dashboard</a>
+          <a href="/social.html">Social Impact</a>
+          <a href="/scheduler.html">Scheduler</a>
+          <a href="/about.html" class="active">About</a>
+          <a href="/login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
         </div>
         <div class="menu-toggle">
           <i class="fas fa-bars"></i>
         </div>
+        <button onclick="window.location.reload()" style="background: none; border: none; color: white; cursor: pointer; margin-left: 10px;">
+          <i class="fas fa-sync-alt"></i>
+        </button>
       </div>
     </div>
 
@@ -49,6 +53,10 @@
             <span class="stat-number">99.9%</span>
             <span class="stat-label">Accuracy</span>
           </div>
+          <div class="stat-item">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Core Modules</span>
+          </div>
         </div>
       </div>
       <div class="hero-visual">
@@ -67,7 +75,7 @@
           </div>
           <div class="section-content">
             <h2>Our <em>Mission</em></h2>
-            <p>We believe that everyone deserves access to accurate, timely weather information. Our mission is to empower individuals and communities with intelligent weather monitoring tools that help them make informed decisions and stay safe in any weather condition.</p>
+            <p>We believe that everyone deserves access to accurate, timely weather information. Our mission is to empower individuals, communities, and farmers with intelligent weather monitoring tools that help them make informed decisions, stay safe in any weather condition, and optimize agricultural productivity through smart farming practices.</p>
             <div class="mission-features">
               <div class="feature-item">
                 <i class="fas fa-clock"></i>
@@ -80,6 +88,14 @@
               <div class="feature-item">
                 <i class="fas fa-shield-alt"></i>
                 <span>Privacy First</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-seedling"></i>
+                <span>Smart Agriculture</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Disaster Response</span>
               </div>
             </div>
           </div>
@@ -105,31 +121,31 @@
             </div>
             <div class="feature-card-modern">
               <div class="feature-icon-modern">
-                <i class="fas fa-chart-line"></i>
+                <i class="fas fa-seedling"></i>
               </div>
-              <h3>Advanced Analytics</h3>
-              <p>Detailed weather patterns and trends with interactive charts and visualizations.</p>
+              <h3>Smart Agriculture</h3>
+              <p>Weather-driven farming intelligence with crop-specific alerts, irrigation planning, and harvest optimization.</p>
             </div>
             <div class="feature-card-modern">
               <div class="feature-icon-modern">
-                <i class="fas fa-mobile-alt"></i>
+                <i class="fas fa-exclamation-triangle"></i>
               </div>
-              <h3>Mobile Optimized</h3>
-              <p>Access weather information on any device with our responsive, mobile-first design.</p>
+              <h3>Disaster Response</h3>
+              <p>Real-time severe weather alerts, evacuation routes, and shelter mapping for emergency situations.</p>
             </div>
             <div class="feature-card-modern">
               <div class="feature-icon-modern">
                 <i class="fas fa-map-marked-alt"></i>
               </div>
               <h3>Interactive Maps</h3>
-              <p>Explore weather patterns worldwide with our interactive world weather map.</p>
+              <p>Explore weather patterns worldwide with our interactive world weather map and farm location tracking.</p>
             </div>
             <div class="feature-card-modern">
               <div class="feature-icon-modern">
                 <i class="fas fa-robot"></i>
               </div>
               <h3>AI Recommendations</h3>
-              <p>Get personalized weather recommendations based on current conditions and forecasts.</p>
+              <p>Get personalized weather recommendations and farming advice based on current conditions and forecasts.</p>
             </div>
           </div>
         </div>
@@ -141,23 +157,77 @@
             <div class="step-item">
               <div class="step-number">1</div>
               <div class="step-content">
-                <h3>Choose Location</h3>
-                <p>Enter your city or use GPS to automatically detect your location</p>
+                <h3>Choose Your Module</h3>
+                <p>Select from Weather Dashboard, Smart Agriculture, or Disaster Response based on your needs</p>
               </div>
             </div>
             <div class="step-item">
               <div class="step-number">2</div>
               <div class="step-content">
-                <h3>Set Preferences</h3>
-                <p>Configure your weather alerts and monitoring preferences</p>
+                <h3>Set Location & Preferences</h3>
+                <p>Enter your location or use GPS, then configure alerts and monitoring preferences</p>
               </div>
             </div>
             <div class="step-item">
               <div class="step-number">3</div>
               <div class="step-content">
-                <h3>Stay Informed</h3>
-                <p>Receive timely notifications and weather updates</p>
+                <h3>Get Intelligent Insights</h3>
+                <p>Receive weather updates, farming recommendations, or emergency alerts based on your module</p>
               </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h3>Take Action</h3>
+                <p>Use the insights to plan your day, optimize farming operations, or stay safe during emergencies</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Modules Section -->
+        <div class="core-modules-section">
+          <h2>Our <em>Core Modules</em></h2>
+          <p>Three powerful modules designed to meet different weather monitoring and decision-making needs.</p>
+          <div class="modules-grid">
+            <div class="module-card">
+              <div class="module-icon">
+                <i class="fas fa-cloud-sun"></i>
+              </div>
+              <h3>Weather Dashboard</h3>
+              <p>Comprehensive weather monitoring with real-time data, forecasts, and personalized alerts for daily planning and safety.</p>
+              <ul class="module-features">
+                <li><i class="fas fa-check"></i> Real-time weather data</li>
+                <li><i class="fas fa-check"></i> 5-day forecasts</li>
+                <li><i class="fas fa-check"></i> Interactive maps</li>
+                <li><i class="fas fa-check"></i> Custom alerts</li>
+              </ul>
+            </div>
+            <div class="module-card">
+              <div class="module-icon">
+                <i class="fas fa-seedling"></i>
+              </div>
+              <h3>Smart Agriculture</h3>
+              <p>Weather-driven farming intelligence that helps farmers optimize crop management, irrigation, and harvest timing.</p>
+              <ul class="module-features">
+                <li><i class="fas fa-check"></i> Crop-specific alerts</li>
+                <li><i class="fas fa-check"></i> Irrigation planning</li>
+                <li><i class="fas fa-check"></i> Pest & disease warnings</li>
+                <li><i class="fas fa-check"></i> Harvest optimization</li>
+              </ul>
+            </div>
+            <div class="module-card">
+              <div class="module-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <h3>Disaster Response</h3>
+              <p>Emergency weather monitoring with evacuation routes, shelter mapping, and real-time severe weather alerts.</p>
+              <ul class="module-features">
+                <li><i class="fas fa-check"></i> Severe weather alerts</li>
+                <li><i class="fas fa-check"></i> Evacuation routes</li>
+                <li><i class="fas fa-check"></i> Shelter mapping</li>
+                <li><i class="fas fa-check"></i> Emergency notifications</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -166,7 +236,7 @@
         <div class="tech-section">
           <div class="tech-content">
             <h2>Powered by <em>Advanced Technology</em></h2>
-            <p>Our platform leverages cutting-edge weather APIs and machine learning algorithms to provide you with the most accurate and reliable weather information available.</p>
+            <p>Our platform leverages cutting-edge weather APIs, machine learning algorithms, and agricultural intelligence to provide you with the most accurate and reliable weather information and farming recommendations available.</p>
             <div class="tech-stack">
               <div class="tech-item">
                 <i class="fas fa-cloud"></i>
@@ -181,8 +251,16 @@
                 <span>AI Algorithms</span>
               </div>
               <div class="tech-item">
+                <i class="fas fa-seedling"></i>
+                <span>Agricultural Intelligence</span>
+              </div>
+              <div class="tech-item">
                 <i class="fas fa-mobile"></i>
                 <span>Progressive Web App</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Real-time Alerts</span>
               </div>
             </div>
           </div>
@@ -250,10 +328,10 @@
         <div class="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="scheduler.html">Scheduler</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+            <li><a href="/scheduler.html">Scheduler</a></li>
+            <li><a href="/about.html">About</a></li>
           </ul>
         </div>
       </div>
@@ -262,6 +340,7 @@
       </div>
     </footer>
 
-    <script type="module" src="script.js?v=1.0"></script>
+    <script type="module" src="js/script.js?v=1.0"></script>
+    <script src="js/auth-nav.js"></script>
   </body>
 </html> 

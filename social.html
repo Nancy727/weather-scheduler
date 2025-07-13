@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Social Impact - Weather Alert Scheduler</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="../css/common.css">
   <style>
     :root {
       --primary-blue: #1E40AF;
@@ -139,10 +139,15 @@
 
     .social-card.agriculture {
       background: linear-gradient(135deg, #FFFBEB 0%, #FFFFFF 100%);
+      border-color: #F59E0B;
     }
 
     .social-card.agriculture::before {
       background: linear-gradient(90deg, #D97706, #F59E0B, #FCD34D);
+    }
+
+    .social-card.agriculture:hover {
+      border-color: #D97706;
     }
 
     .icon-container {
@@ -331,15 +336,17 @@
     <div class="nav-container">
       <div class="logo">
         <i class="fas fa-cloud-sun"></i>
-        <span>WeatherScheduler</span>
+        <span>WeatherAlertScheduler</span>
       </div>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="scheduler.html">Scheduler</a>
-        <a href="about.html">About</a>
-        <a href="social.html" class="active">Social Impact</a>
-        <a href="login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="/index.html">Home</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/scheduler.html">Scheduler</a>
+        <a href="/about.html">About</a>
+        <a href="/social.html" class="active">Social Impact</a>
+        <a href="disaster-response.html">Disaster Response</a>
+        <a href="agriculture-alert.html">Agriculture Alert</a>
+        <a href="/login.html" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
       </div>
       <div class="menu-toggle">
         <i class="fas fa-bars"></i>
@@ -350,7 +357,7 @@
   <div class="social-impact-container">
     <div class="social-impact-header">
       <h1>Social Impact Features</h1>
-      <p>Explore our top 3 high-impact modules for disaster response, health protection, and smart agriculture—designed to save lives, protect communities, and empower farmers worldwide.</p>
+      <p>Explore our high-impact modules for disaster response and smart agriculture—designed to save lives, protect communities, and empower farmers worldwide.</p>
     </div>
 
     <div class="social-cards">
@@ -368,48 +375,30 @@
           <li><i class="fas fa-bell"></i> Push notifications & banners</li>
         </ul>
         <div class="card-actions">
-          <button class="primary" onclick="window.location.href='disaster-response.html'">Learn More</button>
-          <button class="secondary" onclick="alert('Demo coming soon!')">Preview Demo</button>
+          <button class="primary" onclick="window.location.href='disaster-response.html'">Use Service</button>
         </div>
       </div>
 
-      <!-- Health Protection -->
-      <div class="social-card health">
-        <div class="icon-container">
-          <i class="fas fa-heartbeat icon"></i>
-        </div>
-        <h2>Health Protection System</h2>
-        <p>Live air quality monitoring, personalized risk alerts, and smart rescheduling for sensitive groups. Stay safe from pollution and allergens.</p>
-        <ul class="feature-list">
-          <li><i class="fas fa-smog"></i> AirVisual AQI integration</li>
-          <li><i class="fas fa-lungs"></i> Animated health dashboard</li>
-          <li><i class="fas fa-user-shield"></i> Personalized risk alerts</li>
-          <li><i class="fas fa-bell"></i> Mask & medication reminders</li>
-        </ul>
-        <div class="card-actions">
-          <button class="primary" onclick="window.location.href='health-protection.html'">Learn More</button>
-          <button class="secondary" onclick="alert('Demo coming soon!')">Preview Demo</button>
-        </div>
-      </div>
-
-      <!-- Agriculture Assistant -->
+      <!-- Smart Agriculture -->
       <div class="social-card agriculture">
         <div class="icon-container">
-          <i class="fas fa-tractor icon"></i>
+          <i class="fas fa-seedling icon"></i>
         </div>
-        <h2>Multilingual Agricultural Assistant</h2>
-        <p>Soil-specific planting advice, crop calendars, and voice guidance in English, Spanish, Hindi, and Mandarin. Empowering farmers everywhere.</p>
+        <h2>Smart Agriculture Intelligence</h2>
+        <p>Weather-driven farming assistant with crop-specific alerts, irrigation planning, and harvest optimization. Empowers farmers with real-time weather intelligence.</p>
         <ul class="feature-list">
-          <li><i class="fas fa-seedling"></i> SoilGrids & crop planner</li>
-          <li><i class="fas fa-language"></i> Multilingual support</li>
-          <li><i class="fas fa-calendar-alt"></i> Interactive crop calendar</li>
-          <li><i class="fas fa-volume-up"></i> Voice & print guides</li>
+          <li><i class="fas fa-cloud-sun"></i> Real-time weather monitoring</li>
+          <li><i class="fas fa-map-marked-alt"></i> Interactive farm mapping</li>
+          <li><i class="fas fa-tint"></i> Smart irrigation planning</li>
+          <li><i class="fas fa-calendar-alt"></i> Sowing & harvest advisory</li>
+          <li><i class="fas fa-bug"></i> Pest & disease alerts</li>
+          <li><i class="fas fa-chart-line"></i> Crop health monitoring</li>
         </ul>
         <div class="card-actions">
-          <button class="primary" onclick="window.location.href='agriculture-alert.html'">Learn More</button>
-          <button class="secondary" onclick="alert('Demo coming soon!')">Preview Demo</button>
+          <button class="primary" onclick="window.location.href='agriculture-alert.html'">Use Service</button>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -433,10 +422,10 @@
       <div class="footer-section">
         <h3>Quick Links</h3>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="scheduler.html">Scheduler</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/dashboard.html">Dashboard</a></li>
+          <li><a href="/scheduler.html">Scheduler</a></li>
+          <li><a href="/about.html">About</a></li>
         </ul>
       </div>
     </div>
@@ -445,7 +434,8 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/auth-nav.js"></script>
   <script>
     // Simple fallback to ensure cards are visible
     document.addEventListener('DOMContentLoaded', function() {

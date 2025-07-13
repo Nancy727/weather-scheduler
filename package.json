@@ -1,0 +1,28 @@
+{
+  "name": "weather-scheduler",
+  "version": "1.0.0",
+  "description": "A modern, responsive weather monitoring and alert scheduling website that helps you stay informed about weather conditions in your area. Built with vanilla JavaScript, HTML, and CSS, featuring real-time weather data from OpenWeather API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nancy727/weather-scheduler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Nancy727/weather-scheduler/issues"
+  },
+  "homepage": "https://github.com/Nancy727/weather-scheduler#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}

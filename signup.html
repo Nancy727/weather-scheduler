@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up - Weather Scheduler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="scheduler.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/scheduler.css" />
     <style>
       body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
       .signup-card {
@@ -92,6 +92,10 @@
       <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
       <form id="signupForm">
         <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" required placeholder="Enter your full name" />
+        </div>
+        <div class="form-group">
           <label for="signupEmail">Email</label>
           <input type="email" id="signupEmail" required placeholder="Enter your email" />
         </div>
@@ -106,16 +110,18 @@
         <div class="signup-error" id="signupError" style="display:none;"></div>
         <button type="submit" class="btn-primary">Sign Up</button>
       </form>
-      <a href="login.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Login</a>
+      <a href="/login.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Login</a>
     </div>
+    <script src="js/auth-nav.js"></script>
     <script>
-      document.getElementById('signupForm').addEventListener('submit', function(e) {
+      document.getElementById('signupForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        const name = document.getElementById('signupName').value.trim();
         const email = document.getElementById('signupEmail').value.trim();
         const password = document.getElementById('signupPassword').value;
         const confirm = document.getElementById('signupConfirm').value;
         const errorDiv = document.getElementById('signupError');
-        if (!email || !password || !confirm) {
+        if (!name || !email || !password || !confirm) {
           errorDiv.textContent = 'Please fill in all fields.';
           errorDiv.style.display = '';
           return;
@@ -125,11 +131,26 @@
           errorDiv.style.display = '';
           return;
         }
-        // Store user in localStorage (simple demo, not secure)
-        localStorage.setItem('userEmail', email);
-        localStorage.setItem('userPassword', password);
-        errorDiv.style.display = 'none';
-        window.location.href = 'login.html';
+        try {
+          const res = await fetch('http://localhost:5000/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            errorDiv.textContent = data.error || 'Signup failed.';
+            errorDiv.style.display = '';
+            errorDiv.style.color = '#dc3545';
+            return;
+          }
+          errorDiv.textContent = 'Signup successful! Please log in.';
+          errorDiv.style.display = '';
+          errorDiv.style.color = '#22bb33';
+        } catch (err) {
+          errorDiv.textContent = 'Server error. Please try again.';
+          errorDiv.style.display = '';
+        }
       });
     </script>
   </body>
