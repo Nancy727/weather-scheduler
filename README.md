@@ -1,27 +1,29 @@
-# Weather Alert Scheduler
+# WeatherAlertScheduler
 
-A modern, responsive weather monitoring and alert scheduling website that helps you stay informed about weather conditions in your area. Built with vanilla JavaScript, HTML, and CSS, featuring real-time weather data from OpenWeather API.
+A modern, responsive weather monitoring and smart alert scheduling platform that helps you stay informed, prepared, and empowered—whether you're a citizen, farmer, or emergency responder. Built with vanilla JavaScript, HTML, and CSS, featuring real-time weather data from OpenWeather API.
 
-## 🌟 Features
+## 🌟 Core Modules
 
-### Dashboard
+### 1. Weather Dashboard
 - **Real-time Weather Data**: Get current weather conditions for any location worldwide
 - **5-Day Forecast**: Plan ahead with detailed weather predictions
 - **Weather Details**: Temperature, humidity, wind speed, and visibility
 - **Location Search**: Search for any city to get weather information
-- **Weather Alerts**: Automatic detection of severe weather conditions
+- **Custom Alerts**: Automatic detection of severe weather conditions
+- **Interactive Maps**: Visualize weather patterns globally
 
-### Scheduler
-- **Custom Alerts**: Set up personalized weather alerts based on your preferences
-- **Multiple Alert Types**: Monitor temperature, rain, snow, wind, and humidity
-- **Flexible Conditions**: Set alerts for above, below, or equal to specific values
-- **Scheduling Options**: Choose from daily, weekly, or monthly alert frequencies
-- **Alert Management**: View, edit, and delete your active alerts
+### 2. Smart Agriculture
+- **Crop-specific Alerts**: Weather-driven farming intelligence for optimal crop management
+- **Irrigation Planner**: Recommendations based on weather and soil
+- **Sowing/Harvest Advisory**: Best times for planting and harvesting
+- **Pest & Disease Alerts**: Early warnings for agricultural risks
+- **Farm Map**: Visualize your fields, zones, and weather overlays
 
-### About
-- **Information**: Learn about the platform and its features
-- **How It Works**: Understand the technology behind the weather monitoring
-- **Privacy**: Information about data handling and privacy
+### 3. Disaster Response
+- **Severe Weather Alerts**: Real-time notifications for critical events
+- **Evacuation Routes**: Map-based guidance for emergencies
+- **Shelter Mapping**: Find nearby safe locations
+- **Emergency Notifications**: Stay informed and safe
 
 ## 🚀 Getting Started
 
@@ -39,13 +41,10 @@ A modern, responsive weather monitoring and alert scheduling website that helps 
    - Get your API key from the dashboard
 
 3. **Configure the API Key**
-   - Open `config.js`
-   - Replace `'your_openweather_api_key_here'` with your actual API key
-   ```javascript
-   const config = {
-       OPENWEATHER_API_KEY: 'your_actual_api_key_here',
-       // ... other config
-   };
+   - Open `js/smart-agriculture.js` and `js/dashboard.js`
+   - Replace the placeholder API key with your actual API key in the code:
+   ```js
+   const OPENWEATHER_API_KEY = 'your_actual_api_key_here';
    ```
 
 4. **Run the Application**
@@ -67,35 +66,27 @@ A modern, responsive weather monitoring and alert scheduling website that helps 
 
 ## 📱 Usage
 
-### Dashboard
-1. **View Current Weather**: The dashboard shows weather for the default location (London)
-2. **Search for a Location**: Enter a city name in the search bar and click the search button
-3. **View Forecast**: Scroll down to see the 5-day weather forecast
-4. **Check Alerts**: View any active weather alerts for the current location
+### Weather Dashboard
+- View current weather and 5-day forecast for any location
+- Use the interactive map to explore weather patterns
+- Set up custom alerts for severe weather
 
-### Creating Weather Alerts
-1. **Navigate to Scheduler**: Click the "Scheduler" tab in the navigation
-2. **Fill the Form**:
-   - **Alert Name**: Give your alert a descriptive name
-   - **Location**: Enter the city you want to monitor
-   - **Alert Type**: Choose what to monitor (temperature, rain, wind, etc.)
-   - **Condition**: Select above, below, or equals
-   - **Threshold Value**: Set the value that triggers the alert
-   - **Check Time**: Choose when to check the weather
-   - **Frequency**: Select how often to check (daily, weekly, monthly)
-3. **Create Alert**: Click "Create Alert" to save your alert
+### Smart Agriculture
+- Visualize your farm and crop zones on the map
+- Get crop-specific weather alerts and irrigation advice
+- Receive pest/disease warnings and weekly farming tasks
 
-### Managing Alerts
-- **View Alerts**: All your active alerts are displayed in the scheduler page
-- **Edit Alerts**: Click the "Edit" button to modify an alert (feature to be implemented)
-- **Delete Alerts**: Click the "Delete" button to remove an alert
+### Disaster Response
+- Receive real-time severe weather alerts
+- View evacuation routes and shelter locations on the map
+- Get emergency notifications and safety tips
 
 ## 🔧 Technical Details
 
 ### Architecture
 - **Frontend**: Vanilla JavaScript, HTML5, CSS3
 - **Weather Data**: OpenWeather API (free tier)
-- **Storage**: Local Storage for alert persistence
+- **Maps**: Leaflet.js for interactive mapping
 - **Animations**: GSAP for smooth animations
 - **Scrolling**: Locomotive Scroll for smooth scrolling effects
 
@@ -103,7 +94,7 @@ A modern, responsive weather monitoring and alert scheduling website that helps 
 The application uses the OpenWeather API for:
 - Current weather data (`/weather` endpoint)
 - 5-day forecast (`/forecast` endpoint)
-- Weather icons and descriptions
+- Air quality and alerts
 
 ### Browser Compatibility
 - Chrome 60+
@@ -114,14 +105,12 @@ The application uses the OpenWeather API for:
 ## 🎨 Customization
 
 ### Styling
-- Modify `style.css` to change colors, fonts, and layout
+- Modify `css/style.css`, `css/home.css`, and `css/about.css` to change colors, fonts, and layout
 - The design uses CSS Grid and Flexbox for responsive layouts
-- Color scheme can be adjusted by changing CSS custom properties
 
 ### Functionality
-- Add new alert types in the `WeatherAPI` class
-- Modify alert conditions in the `AlertScheduler` class
-- Extend the forecast display in the `WeatherApp` class
+- Add new alert types or modules in the respective JS files
+- Extend the dashboard, agriculture, or disaster response features as needed
 
 ## 🔒 Privacy & Security
 
@@ -136,7 +125,7 @@ The application uses the OpenWeather API for:
 
 1. **Weather data not loading**
    - Check your internet connection
-   - Verify your API key is correct in `config.js`
+   - Verify your API key is correct in the JS files
    - Ensure the API key has the necessary permissions
 
 2. **Alerts not working**
@@ -158,12 +147,12 @@ The application uses the OpenWeather API for:
 
 - [ ] Email notifications for alerts
 - [ ] Push notifications for mobile devices
-- [ ] Weather maps integration
 - [ ] Historical weather data
 - [ ] Multiple location support
 - [ ] Weather widgets for embedding
 - [ ] Dark mode toggle
 - [ ] Weather radar integration
+- [ ] More advanced farm analytics
 
 ## 🤝 Contributing
 
@@ -183,33 +172,14 @@ This project is open source and available under the [MIT License](LICENSE).
 - [Font Awesome](https://fontawesome.com/) for icons
 - [GSAP](https://greensock.com/gsap/) for animations
 - [Locomotive Scroll](https://locomotivemtl.github.io/locomotive-scroll/) for smooth scrolling
+- [Leaflet.js](https://leafletjs.com/) for interactive maps
 
 ## 📞 Support
 
 For support or questions:
-- Email: info@weatherscheduler.com
+- Email: info@weatheralertscheduler.com
 - Phone: +1 (555) 123-4567
 
 ---
 
 **Note**: This is a demo application. For production use, consider implementing proper error handling, rate limiting, and security measures.  
-```
-
-### Key Sections Included:
-
-1. **Eye-catching header** with preview image
-2. **Feature highlights** showing what makes your site special
-3. **Technology stack** you used
-4. **Easy installation** instructions
-5. **Customization guide** for others who might use your code
-6. **Responsiveness details**
-7. **License information**
-8. **Credit section** for assets used
-
-You can customize this further by:
-- Adding your own screenshot (replace the imgur link)
-- Updating the live demo URL when deployed
-- Including specific instructions if you used any build tools
-- Adding contribution guidelines if it's an open source project
-
-The clean formatting and emoji icons make it visually appealing while maintaining professionalism. The markdown will render beautifully on GitHub.
