@@ -174,12 +174,5 @@ This project is open source and available under the [MIT License](LICENSE).
 - [Locomotive Scroll](https://locomotivemtl.github.io/locomotive-scroll/) for smooth scrolling
 - [Leaflet.js](https://leafletjs.com/) for interactive maps
 
-## 📞 Support
-
-For support or questions:
-- Email: info@weatheralertscheduler.com
-- Phone: +1 (555) 123-4567
-
----
 
 **Note**: This is a demo application. For production use, consider implementing proper error handling, rate limiting, and security measures.  
